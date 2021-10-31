@@ -10,5 +10,6 @@ matplotlib
 nltk
 bs4
 tensorflow
+tensorflow-hub
 pydot
 graphviz

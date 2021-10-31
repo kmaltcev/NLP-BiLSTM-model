@@ -1,0 +1,215 @@
+﻿
+THE HAMMER OF GOD
+
+By Arthur C. Clarke
+
+
+Arthur C. Clarke is perhaps the most famous modern science fiction writer in the world, seriously rivaled for that title only by the late Isaac Asimov and Robert A. Heinlein. Clarke is probably most widely known for his work on Stanley Kubrick’s film 2001: A Space Odyssey, but he is also renowned as a novelist, short-story writer, and as a writer of nonfiction, usually on technological subjects such as spaceflight. He has won three Nebula Awards, three Hugo Awards, the British Science Fiction Award, the John W. Campbell Memorial Award, and a Grandmaster Nebula for Life Achievement. His best-known books include the novels Childhood’s End, The City and the Stars, The Deep Range, Rendezvous with Rama, A Fall of Moondust, 2001: A Space Odyssey, 2010: Odyssey Two, 2061: Odyssey Three, The Songs of Distant Earth, and The Fountains of Paradise. and the collections The Nine Billion Names of God, Tales of Ten Worlds, and The Sentinel. He has also written many nonfiction books on scientific topics, the best known of which are probably Profiles of the Future and The Wind from the Sun. Clarke is generally considered to be the man who first came up with the idea of the communications satellite. His most recent works are the novel The Garden of Rama (written with Gentry Lee) and the nonfiction book How the World Was One. Upcoming is a novel version of this story, The Hammer of God. Born in Somerset, England, Clarke now lives in Sri Lanka. 
+
+     The incisive and elegant story that follows was first published in Time magazine, which, to my knowledge, is the only science fiction story and only the second work of fiction of any sort ever published by Time, an indication of Clarke’s stature. It covers some ground that will be familiar to long-time Clarke readers, but it handles its themes with classical purity and grace. With marvelous economy and precision, it manages to pack enough content into a very short story to last many an author for an entire four-hundred-page novel. Its quietness is deceptive too, for in Clarke’s typically cool, calm, understated fashion, it ultimately delivers quite an emotional punch—as well as carrying a message vital for the survival of the human race, and perhaps of all life on Earth.
+
+* * * *
+
+It came in vertically, punching a hole 10 km wide through the atmosphere, generating temperatures so high that the air itself started to burn. When it hit the ground near the Gulf of Mexico, rock turned to liquid and spread outward in mountainous waves, not freezing until it had formed a crater 200 km across.
+     
+     That was only the beginning of disaster: now the real tragedy began. Nitric oxides rained from the air, turning the sea to acid. Clouds of soot from incinerated forests darkened the sky, hiding the sun for months. Worldwide, the temperature dropped precipitously, killing off most of the plants and animals that had survived the initial cataclysm. Though some species would linger on for millenniums, the reign of the great reptiles was finally over.
+     
+     The clock of evolution had been reset; the countdown to Man had begun. The date was, very approximately, 65 million B.C.
+     
+* * * *
+
+Captain Robert Singh never tired of walking in the forest with his little son Toby. It was, of course, a tamed and gentle forest, guaranteed to be free of dangerous animals, but it made an exciting contrast to the rolling sand dunes of their last environment in the Saudi desert—and the one before that, on Australia’s Great Barrier Reef. But when the Skylift Service had moved the house this time, something had gone wrong with the food-recycling system. Though the electronic menus had fail-safe backups, there had been a curious metallic taste to some of the items coming out of the synthesizer recently.
+     
+     “What’s that, Daddy?” asked the four-year-old, pointing to a small hairy face peering at them through a screen of leaves.
+     
+     “Er, some kind of monkey. We’ll ask the Brain when we get home.”
+     
+     “Can I play with it?”
+     
+     “I don’t think that’s a good idea. It could bite. And it probably has fleas. Your robotoys are much nicer.”
+     
+     “But ...”
+     
+     Captain Singh knew what would happen next: he had run this sequence a dozen times. Toby would begin to cry, the monkey would disappear, he would comfort the child as he carried him back to the house . . .
+     
+     But that had been twenty years ago and a quarter-billion kilometers away. The playback came to an end; sound, vision, the scent of unknown flowers and the gentle touch of the wind slowly faded. Suddenly, he was back in this cabin aboard the orbital tug Goliath, commanding the 100-person team of Operation ATLAS, the most critical mission in the history of space exploration. Toby, and the stepmothers and stepfathers of his extended family, remained behind on a distant world which Singh could never revisit. Decades in space—and neglect of the mandatory zero-G exercises—had so weakened him that he could now walk only on the Moon and Mars. Gravity had exiled him from the planet of his birth.
+     
+     “One hour to rendezvous, captain,” said the quiet but insistent voice of David, as Goliath’s central computer had been inevitably named. “Active mode, as requested. Time to come back to the real world.”
+     
+     Goliath’s human commander felt a wave of sadness sweep over him as the final image from his lost past dissolved into a featureless, simmering mist of white noise. Too swift a transition from one reality to another was a good recipe for schizophrenia, and Captain Singh always eased the shock with the most soothing sound he knew: waves falling gently on a beach, with sea gulls crying in the distance. It was yet another memory of a life he had lost, and of a peaceful past that had now been replaced by a fearful present.
+     
+     For a few more moments, he delayed facing his awesome responsibility. Then he sighed and removed the neural-input tap that fitted tightly over his skull and had enabled him to call up his distant past. Like all spacers, Captain Singh belonged to the “Bald Is Beautiful” school, if only because wigs were a nuisance in zero gravity. The social historians were still staggered by the fact that one invention, the portable “Brainman,” could make bare heads the norm within a single decade. Not even quick-change skin coloring, or the lens-corrective laser shaping which had abolished eyeglasses, had made such an impact upon style and fashion.
+     
+     “Captain,” said David. “I know you’re there. Or do you want me to take over?”
+     
+     It was an old joke, inspired by all the insane computers in the fiction and movies of the early electronic age. David had a surprisingly good sense of humor: he was, after all, a Legal Person (Nonhuman; under the famous Hundredth Amendment, and shared—or surpassed—almost all the attributes of his creators. But there were whole sensory and emotional areas which he could not enter. It had been felt unnecessary to equip him with smell or taste, though it would have been easy to do so. And all his attempts at telling dirty stories were such disastrous failures that he had abandoned the genre.
+     
+     “All right, David,” replied the captain. “I’m still in charge.” He removed the mask from his eyes, and turned reluctantly toward the viewport. There, hanging in space before him, was Kali.
+     
+     It looked harmless enough: just another small asteroid, shaped so exactly like a peanut that the resemblance was almost comical. A few large impact craters, and hundreds of tiny ones, were scattered at random over its charcoal-gray surface. There were no visual clues to give any sense of scale, but Singh knew its dimensions by heart: 1,295 m maximum length, 456 m minimum width. Kali would fit easily into many city parks.
+     
+     No wonder that, even now, most of humankind could still not believe that this modest asteroid was the instrument of doom. Or, as the Chrislamic Fundamentalists were calling it, “the Hammer of God.”
+     
+* * * *
+
+The sudden rise of Chrislam had been traumatic equally to Rome and Mecca. Christianity was already reeling from John Paul XXV’s eloquent but belated plea for contraception and the irrefutable proof in the New Dead Sea Scrolls that the Jesus of the Gospels was a composite of at least three persons. Meanwhile the Muslim world had lost much of its economic power when the Cold Fusion breakthrough, after the fiasco of its premature announcement, had brought the Oil Age to a sudden end. The time had been ripe for a new religion embodying, as even its severest critics admitted, the best elements of two ancient ones.
+     
+     The Prophet Fatima Magdalene (née Ruby Goldenburg) had attracted almost 100 million adherents before her spectacular—and, some maintained, self-contrived—martyrdom. Thanks to the brilliant use of neural programming to give previews of Paradise during its ceremonies, Chrislam had grown explosively, though it was still far outnumbered by its parent religions.
+     
+     Inevitably, after the Prophet’s death the movement split into rival factions, each upholding the True Faith. The most fanatical was a fundamentalist group calling itself “the Reborn,” which claimed to be in direct contact with God (or at least Her Archangels) via the listening post they had established in the silent zone on the far side of the Moon, shielded from the radio racket of Earth by 3,000 km of solid rock.
+     
+* * * *
+
+Now Kali filled the main viewscreen. No magnification was needed, for Goliath was hovering only 200 m above its ancient, battered surface. Two crew members had already landed, with the traditional “One small step for a man”—even though walking was impossible on this almost zero-gravity worldlet.
+     
+     “Deploying radio beacon. We’ve got it anchored securely. Now Kali won’t be able to hide from us.”
+     
+     It was a feeble joke, not meriting the laughter it aroused from the dozen officers on the bridge. Ever since rendezvous, there had been a subtle change in the crew’s morale, with unpredictable swings between gloom and juvenile humor. The ship’s physician had already prescribed tranquilizers for one mild case of manic-depressive symptoms. It would grow worse in the long weeks ahead, when there would be little to do but wait.
+     
+     The first waiting period had already begun. Back on Earth, giant radio telescopes were tuned to receive the pulses from the beacon. Although Kali’s orbit had already been calculated with the greatest possible accuracy, there was still a slim chance that the asteroid might pass harmlessly by. The radio measuring rod would settle the matter, for better or worse.
+     
+     It was a long two hours before the verdict came, and David relayed it to the crew.
+     
+     “Spaceguard reports that the probability of impact on Earth is 99.9%. Operation ATLAS will begin immediately.”
+     
+     The task of the mythological Atlas was to hold up the heavens and prevent them from crashing down upon Earth. The ATLAS booster that Goliath carried as an external payload had a more modest goal: keeping at bay only a small piece of the sky.
+
+* * * *
+
+It was the size of a small house, weighed 9,000 tons and was moving at 50,000 km/h. As it passed over the Grand Teton National Park, one alert tourist photographed the incandescent fireball and its long vapor trail. In less than two minutes, it had sliced through the Earth’s atmosphere and returned to space.
+     
+     The slightest change of orbit during the billions of years it had been circling the sun might have sent the asteroid crashing upon any of the world’s great cities with an explosive force five times that of the bomb that destroyed Hiroshima.
+     
+     The date was Aug. 10, 1972.
+     
+* * * *
+
+Spaceguard had been one of the last projects of the legendary NASA, at the close of the 20th century. Its initial objective had been modest enough: to make as complete a survey as possible of the asteroids and comets that crossed the orbit of Earth—and to determine if any were a potential threat.
+     
+     With a total budget seldom exceeding $10 million a year, a worldwide network of telescopes, most of them operated by skilled amateurs, had been established by the year 2000. Sixty-one years later, the spectacular return of Halley’s Comet encouraged more funding, and the great 2079 fireball, luckily impacting in mid-Atlantic, gave Spaceguard additional prestige. By the end of the century, it had located more than 1 million asteroids, and the survey was believed to be 90% complete. However, it would have to be continued indefinitely: there was always a chance that some intruder might come rushing in from the uncharted outer reaches of the solar system.
+     
+     As had Kali, which had been detected in late 2212 as it fell sunward past the orbit of Jupiter- Fortunately humankind had not been wholly unprepared, thanks to the fact that Senator George Ledstone (Independent, West America) had chaired an influential finance committee almost a generation earlier.
+     
+     The Senator had one public eccentricity and, he cheerfully admitted, one secret vice. He always wore massive horn-rimmed eyeglasses (nonfunctional, of course) because they had an intimidating effect on uncooperative witnesses, few of whom had ever encountered such a novelty. His “secret vice,” perfectly well known to everyone, was rifle shooting on a standard Olympic range, set up in the tunnels of a long-abandoned missile silo near Mount Cheyenne. Ever since the demilitarization of Planet Earth (much accelerated by the famous slogan “Guns Are the Crutches of the Impotent”), such activities had been frowned upon, though not actively discouraged.
+     
+     There was no doubt that Senator Ledstone was an original; it seemed to run in the family. His grandmother had been a colonel in the dreaded Beverly Hills Militia, whose skirmishes with the L. A. Irregulars had spawned endless psychodramas in every medium, from old-fashioned ballet to direct brain stimulation’ And his grandfather had been one of the most notorious bootleggers of the 2lst century. Before he was killed in a shoot-out with the Canadian Medicops during an ingenious attempt to smuggle a kiloton of tobacco up Niagara Falls, it was estimated that “Smokey” had been responsible for at least 20 million deaths.
+     
+     Ledstone was quite unrepentant about his grandfather, whose sensational demise had triggered the repeal of the late U.S.’s third, and most disastrous, attempt at Prohibition. He argued that responsible adults should be allowed to commit suicide in any way they pleased—by alcohol, cocaine or even tobacco—as long as they did not kill innocent bystanders during the process.
+     
+     When the proposed budget for Spaceguard Phase 2 was first presented to him, Senator Ledstone had been outraged by the idea of throwing billions of dollars into space. It was true that the global economy was in good shape; since the almost simultaneous collapse of communism and capitalism, the skillful application of chaos theory by World Bank mathematicians had broken the old cycle of booms and busts and averted (so far) the Final Depression predicted by many pessimists. Nonetheless, the Senator argued that the money could be much better spent on Earth—especially on his favorite project, reconstructing what was left of California after the Superquake.
+     
+     When Ledstone had twice vetoed Spaceguard Phase 2, everyone agreed that no one on Earth would make him change his mind. They had reckoned without someone from Mars.
+     
+     The Red Planet was no longer quite so red, though the process of greening it had barely begun. Concentrating on the problems of survival, the colonists (they hated the word and were already saying proudly “we Martians”) had little energy left over for art or science. But the lightning flash of genius strikes where it will, and the greatest theoretical physicist of the century was born under the bubble domes of Port Lowell.
+     
+     Like Einstein, to whom he was often compared, Carlos Mendoza was an excellent musician; he owned the only saxophone on Mars and was a skilled performer on that antique instrument. He could have received his Nobel Prize on Mars, as everyone expected, but he loved surprises and practical jokes. Thus he appeared in Stockholm looking like a knight in high-tech armor, wearing one of the powered exoskeletons developed for paraplegics. With this mechanical assistance, he could function almost unhandicapped in an environment that would otherwise have quickly killed him.
+     
+     Needless to say, when the ceremony was over, Carlos was bombarded with invitations to scientific and social functions. Among the few he was able to accept was an appearance before the World Budget Committee, where Senator Ledstone closely questioned him about his opinion of Project Spaceguard.
+     
+     “I live on a world which still bears the scars of a thousand meteor impacts, some of them hundreds of kilometers across,” said Professor Mendoza. “Once they were equally common on Earth, but wind and rain—something we don’t have yet on Mars, though we’re working on it!—have worn them away.”
+     
+     Senator Ledstone: “The Spaceguarders are always pointing to signs of asteroid impacts on Earth. How seriously should we take their warnings?”
+     
+     Professor Mendoza: “Very seriously, Mr. Chairman. Sooner or later, there’s bound to be another major impact.”
+     
+     Senator Ledstone was impressed, and indeed charmed, by the young scientist, but not yet convinced. What changed his mind was not a matter of logic but of emotion. On his way to London, Carlos Mendoza was killed in a bizarre accident when the control system of his exoskeleton malfunctioned. Deeply moved, Ledstone immediately dropped his opposition to Spaceguard, approving construction of two powerful orbiting tugs, Goliath and Titan, to be kept permanently patrolling on opposite sides of the sun. And when he was a very old man, he said to one of his aides, “They tell me we’ll soon be able to take Mendoza’s brain out of that tank of liquid nitrogen, and talk to it through a computer interface. I wonder what he’s been thinking about, all these years ...”
+     
+* * * *
+
+Assembled on Phobos, the inner satellite of Mars, ATLAS was little more than a set of rocket engines attached to propellant tanks holding 100,000 tons of hydrogen. Though its fusion drive could generate far less thrust than the primitive missile that had carried Yuri Gagarin into space, it could run continuously not merely for minutes but for weeks. Even so, the effect on the asteroid would be trivial, a velocity change of a few centimeters per second. Yet that might be sufficient to deflect Kali from its fatal orbit during the months while it was still falling earthward.
+     
+* * * *
+
+Now that ATLAS’s propellant tanks, control systems and thrusters had been securely mounted on Kali, it looked as if some lunatic had built an oil refinery on an asteroid. Captain Singh was exhausted, as were all the crew members, after days of assembly and checking. Yet he felt a warm glow of achievement: they had done everything that was expected of them, the countdown was going smoothly, and the rest was up to ATLAS.
+     
+     He would have been far less relaxed had he known of the ABSOLUTE PRIORITY message racing toward him by tight infrared beam from ASTROPOL headquarters in Geneva. It would not reach Goliath for another 30 minutes. And by then it would be much too late.
+
+* * * *
+
+At about T minus 10 minutes, Goliath had drawn away from Kali to stand well clear of the jet with which ATLAS would try to nudge it from its present course. “Like a mouse pushing an elephant,” one media person had described the operation. But in the frictionless vacuum of space, where momentum could never be lost, even one mousepower would be enough if applied early and over a sufficient length of time.
+     
+     The group of officers waiting quietly on the bridge did not expect to see anything spectacular: the plasma jet of the ATLAS drive would be far too hot to produce much visible radiation. Only the telemetry would confirm that ignition had started and that Kali was no longer an implacable juggernaut, wholly beyond the control of humanity
+     
+     There was a brief round of cheering and a gentle patter of applause as the string of zeros on the accelerometer display began to change. The feeling on the bridge was one of relief rather than exultation. Though Kali was stirring, it would be days and weeks before victory was assured.
+     
+     And then, unbelievably, the numbers dropped back to zero. Seconds later, three simultaneous audio alarms sounded. All eyes were suddenly fixed on Kali and the ATLAS booster which should be nudging it from its present course. The sight was heartbreaking: the great propellant tanks were opening up like flowers in a time-lapse movie, spilling out the thousands of tons of reaction mass that might have saved the Earth. Wisps of vapor drifted across the face of the asteroid, veiling its cratered surface with an evanescent atmosphere.
+     
+     Then Kali continued along its path, heading inexorably toward a fiery collision with the Earth.
+     
+* * * *
+
+Captain Singh was alone in the large. well-appointed cabin that had been his home for longer than any other place in the solar system. He was still dazed but was trying to make his peace with the universe.
+     
+     He had lost, finally and forever, all that he loved on Earth. With the decline of the nuclear family, he had known many deep attachments, and it had been hard to decide who should be the mothers of the two children he was permitted. A phrase from an old American novel (he had forgotten the author) kept coming into his mind: “Remember them as they were—and write them off.” The fact that he himself was perfectly safe somehow made him feel worse; Goliath was in no danger whatsoever, and still had all propellant it needed to rejoin the shaken survivors of humanity on the Moon or Mars.
+     
+     Well, he had many friendships—and one that was much more than that—on Mars; this was where his future must lie. He was only 102, with decades of active life ahead of him. But some of the crew had loved ones on the Moon; he would have to put Goliath’s destination to the vote.
+     
+     Ship’s Orders had never covered a situation like this.
+     
+* * * *
+
+I still don’t understand,” said the chief engineer. “why that explosive cord wasn’t detected on the preflight check-out.”
+     
+     “Because that Reborn fanatic could have hidden it easily—and no one would have dreamed of looking for such a thing. Pity ASTROPOI, didn’t catch while he was still on Phobos.”
+     
+     “But why did they do it? I can’t believe that even Chrislamic crazies would want to destroy the Earth.”
+     
+     “You can’t argue with their logic—if you accept their premises. God’ Allah, is testing us, and we mustn’t interfere. If Kali misses, fine. If it doesn’t well, that’s part of Her bigger plan. Maybe we’ve messed up Earth so bad it’s time to start over. Remember that old saying of Tsiolkovski’s: ‘Earth is the cradle of humankind, but you cannot live in the cradle forever.’ Kali could be a sign that it’s time to leave.”
+     
+     The captain held up his hand for silence.
+     
+     “The only important question now, is, Moon or Mars? They’ll both take us. I don’t want to influence you” (that was hardly true; everyone knew where he wanted to go), “so I’d like your view’s first.”
+     
+     The first ballot was Mars 6, Moon 6, Don’t know 1, captain abstaining.
+     
+     Each side was trying to convert the single “Don’t know” when David spoke.
+     
+     “There is an alternative.”
+     
+     “What do you mean?” Captain Singh demanded, rather brusquely.
+     
+     “It seems obvious. Even though ATLAS is destroyed, we still have a chance of saving the Earth. According to my calculations, Goliath has just enough propellant to deflect Kali—if we start thrusting against it immediately. But the longer we wait, the less the probability of success.”
+     
+     There was a moment of stunned silence on the bridge as everyone asked the question, “Why didn’t I think of that?” and quickly arrived at the answer.
+     
+     David had kept his head, if one could use so inappropriate a phrase, while all the humans around him were in a state of shock. There were some compensations in being a Legal Person (Nonhuman). Though David could not know love, neither could he know fear. He would continue to think logically, even to the edge of doom.
+
+* * * *
+
+With any luck, thought Captain Singh, this is my last broadcast to Earth. I’m tired of being a hero, and a slightly premature one at that. Many things could still go wrong, as indeed they already have . . .
+     
+     “This is Captain Singh, space tug Goliath. First of all, let me say how glad we are that the Elders of Chrislam have identified the saboteurs and handed them over to ASTROPOL.
+     
+     “We are now 50 days from Earth, and we have a slight problem. This one, I hasten to add, will not affect our new attempt to deflect Kali into a safe orbit. I note that the news media are calling this deflection Operation Deliverance. We like the name, and hope to live up to it, but we still cannot be absolutely certain of success. David, who appreciates all the goodwill messages he has received, estimates that the probability of Kali impacting Earth is still 10% ...
+     
+     “We had intended to keep just enough propellant reserve to leave Kali shortly before encounter and go into a safer orbit, where our sister ship Titan could rendezvous with us. But that option is now closed. While Goliath was pushing against Kali at maximum drive, we broke through a weak point in the crust. The ship wasn’t damaged, but we’re stuck! All attempts to break away have failed.
+     
+     “We’re not worried, and it may even be a blessing in disguise. Now we’ll use the whole of our remaining propellant to give one final nudge. Perhaps that will be the last drop that’s needed to do the job.
+     
+     “So we’ll ride Kali past Earth, and wave to you from a comfortable distance, in just 50 days.
+     
+     It would be the longest 50 days in the history of the world.
+
+* * * *
+
+Now the huge crescent of the Moon spanned the sky, the jagged mountain peaks along the terminator burning with the fierce light of the lunar dawn. But the dusty plains still untouched by the sun were not completely dark; they were glowing faintly in the light reflected from Earth’s clouds and continents. And scattered here and there across that once dead landscape were the glowing fireflies that marked the first permanent settlements humankind had built beyond the home planet. Captain Singh could easily locate Clavius Base, Port Armstrong, Plato city. He could even see the necklace of faint lights along the Translunar Railroad, bringing its precious cargo of water from the ice mines at the South pole. 
+
+     Earth was now only five hours away.
+     
+* * * *
+
+Kali entered Earth’s atmosphere soon after local midnight, 200 km above Hawaii. Instantly, the gigantic fireball brought a false dawn to the Pacific. Awakening the wildlife on its myriad islands. But few humans had been asleep this night of nights, except those who had sought the oblivion of drugs.
+     
+     Over New Zealand, the heat of the orbiting furnace ignited forests and melted the snow on mountaintops, triggering avalanches into the valleys beneath. But the human race had been very, very lucky: the main thermal impact as Kali passed the Earth was on the Antarctic, the continent that could best absorb it. Even Kali could not strip away all the kilometers of polar ice, but it set in motion the Great Thaw that would change coastlines all around the world.
+     
+     No one who survived hearing it could ever describe the sound of Kali’s passage; none of the recordings were more than feeble echoes. The video coverage, of course, was superb, and would be watched in awe for generations to come. But nothing could ever compare with the fearsome reality.
+     
+     Two minutes after it had sliced into the atmosphere, Kali reentered space. Its closest approach to Earth had been 60 km. In that two minutes, it took 100,000 lives and did $l trillion worth of damage.
+     
+* * * *
+
+Goliath had been protected from the fireball by the massive shield of Kali herself; the sheets of incandescent plasma streamed harmlessly. But when the asteroid smashed into Earth’s blanket of air at more than 100 times the speed of sound, the colossal drag forces mounted swiftly to five, 10, 20 gravities—and peaked at a level far beyond anything that machines or flesh could withstand.
+     
+     Now indeed Kali’s orbit had been drastically changed; never again would it come near Earth. On its next return to the inner solar system, the swifter spacecraft of a later age would visit the crumpled wreckage of Goliath and bear reverently homeward the bodies of those who had saved the world.
+     
+     Until the next encounter.

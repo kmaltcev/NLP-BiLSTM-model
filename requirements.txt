@@ -1,0 +1,14 @@
+pandas
+numpy
+tqdm
+keras
+gensim == 3.8.3
+sklearn
+keras
+seaborn
+matplotlib
+nltk
+bs4
+tensorflow
+pydot
+graphviz

@@ -1,0 +1,69 @@
+{
+    "algorithm": {
+        "command": null,
+        "id": 6,
+        "name": "Embeddings from Language Models (ELMo)",
+        "tool": "https://github.com/ltgoslo/simple_elmo_training",
+        "url": "https://allennlp.org/elmo",
+        "version": null
+    },
+    "contents": [
+        {
+            "filename": "options.json",
+            "format": "json"
+        },
+        {
+            "filename": "meta.json",
+            "format": "json"
+        },
+        {
+            "filename": "model.hdf5",
+            "format": "data"
+        },
+        {
+            "filename": "vocab.txt",
+            "format": "text"
+        },
+        {
+            "filename": "model.ckpt.index",
+            "format": "data"
+        },
+        {
+            "filename": "model.ckpt.meta",
+            "format": "data"
+        },
+        {
+            "filename": "model.ckpt.data-00000-of-00001",
+            "format": "data"
+        }
+    ],
+    "corpus": [
+        {
+            "NER": false,
+            "case preserved": false,
+            "description": "Araneum Russicum Maximum",
+            "id": 120,
+            "language": "rus",
+            "lemmatized": true,
+            "public": true,
+            "stop words removal": "functional PoS",
+            "tagger": "MyStem",
+            "tagset": "null",
+            "tokens": 10000000000,
+            "url": "https://rusvectores.org/en/models/"
+        }
+    ],
+    "creators": [
+        {
+            "email": "andreku@ifi.uio.no",
+            "name": "Andrey Kutuzov"
+        }
+    ],
+    "dimensions": 2048,
+    "documentation": [
+        "https://github.com/ltgoslo/simple_elmo"
+    ],
+    "handle": "http://vectors.nlpl.eu/repository/20/212.zip",
+    "id": 212,
+    "iterations": 2
+}

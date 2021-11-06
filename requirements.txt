@@ -9,10 +9,11 @@ seaborn
 matplotlib
 nltk
 bs4
-tensorflow
+tensorflow-gpu
 tensorflow-hub
 pydot
 graphviz
 ipykernel==6.2.0
 wordcloud
 pymystem3
+simple_elmo

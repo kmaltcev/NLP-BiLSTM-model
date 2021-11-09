@@ -1,19 +1,16 @@
-pandas
 numpy
-tqdm
-keras
-gensim == 3.8.3
+pandas
+tensorflow
 sklearn
 keras
+simple_elmo
+pydot
+graphviz
+
+tqdm
 seaborn
 matplotlib
 nltk
 bs4
-tensorflow-gpu
-tensorflow-hub
-pydot
-graphviz
-ipykernel==6.2.0
 wordcloud
 pymystem3
-simple_elmo

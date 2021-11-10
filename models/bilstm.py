@@ -2,11 +2,10 @@ from keras import Model
 from keras.utils.vis_utils import plot_model
 
 from models.absModel import AbsModel
-from keras.layers import Input, LSTM, Bidirectional, Dense, Dropout, Embedding
+from keras.layers import Input, LSTM, Bidirectional, Dense, Dropout
 
 
 class BiLSTM(AbsModel):
-
     def __init__(self, shape, hidden_state_dim=40, dropout_rate=.2,
                  fc_layer_size=30, learning_rate=0.001, output_units=3):
         super().__init__(learning_rate)
@@ -31,3 +30,7 @@ class BiLSTM(AbsModel):
         # output skeleton
         print(self.model.summary(line_length=80))
         plot_model(self.model, "./plots/bilstm.png", show_shapes=True)
+
+    def confusion_matrix(self, train_set):
+        self.plot_title = 'LSTM Classification Confusion Matrix'
+        super().confusion_matrix(train_set)

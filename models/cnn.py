@@ -40,3 +40,6 @@ class CNN(AbsModel):
         print(self.model.summary(line_length=140))
         plot_model(self.model, "./plots/cnn.png", show_shapes=True)
 
+    def confusion_matrix(self, train_set):
+        self.plot_title = 'CNN Classification Confusion Matrix'
+        super().confusion_matrix(train_set)

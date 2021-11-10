@@ -1,6 +1,9 @@
 import numpy as np
 import pandas as pd
+import seaborn as sns
+
 from keras.optimizer_v2.adam import Adam
+from matplotlib import pyplot as plt
 from sklearn.metrics import confusion_matrix, classification_report
 
 from utils.utils import evaluate, plot_eval
@@ -9,6 +12,8 @@ from utils.utils import evaluate, plot_eval
 class AbsModel:
     history = None
     model = None
+    X_pred = None
+    plot_title = None
 
     def __init__(self, learning_rate):
         self.learning_rate = learning_rate
@@ -22,18 +27,34 @@ class AbsModel:
                                       epochs=epochs, batch_size=batch_size, verbose=2)
         evaluate(self.model, dataset)
         plot_eval(self.history.history)
+        return self.history
 
     def predict(self, train_set):
         predict_x = self.model.predict(train_set.X_test)
-        X_pred = np.argmax(predict_x, axis=1)
+        self.X_pred = np.argmax(predict_x, axis=1)
+        return self.X_pred
 
-        df_test = pd.DataFrame({'true': train_set.Y_test, 'pred': X_pred})
-        tn, fp, fn, tp = confusion_matrix(df_test.true, df_test.pred).ravel()
-        c_matrix = pd.DataFrame({1: [tp, fp], 0: [fn, tn]}, index=[1, 0])
-        # print(f"confusion matrix:\n {}")
-        print("Confusion Matrix:")
-        print(c_matrix)
-        print(classification_report(df_test.true, df_test.pred))
+    def confusion_matrix(self, train_set):
+        df_test = pd.DataFrame({'true': train_set.Y_test, 'pred': self.X_pred})
+        c_matrix = confusion_matrix(df_test.true, df_test.pred)
+        f, ax = plt.subplots(figsize=(5, 5))
+        sns.heatmap(c_matrix, annot=True, linewidth=0.7, linecolor='cyan', fmt='g', ax=ax, cmap="BuPu")
 
-    def build(self):
-        pass
+        plt.title(self.plot_title)
+        plt.xlabel('Y predict')
+        plt.ylabel('Y test')
+        plt.show()
+        return c_matrix
+
+    def validation(self, train_set):
+        validation_size = int(train_set.X_test.shape[0]/2)
+
+        X_validate = train_set.X_test[-validation_size:]
+        Y_validate = train_set.Y_test[-validation_size:]
+        X_test = train_set.X_test[:-validation_size]
+        Y_test = train_set.Y_test[:-validation_size]
+
+        score, acc = self.model.evaluate(X_test, Y_test, verbose=2, batch_size=50)
+
+        print("score: %.2f" % score)
+        print("acc: %.2f" % acc)

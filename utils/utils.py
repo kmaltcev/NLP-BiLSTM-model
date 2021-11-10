@@ -5,6 +5,8 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 
+from wordcloud import WordCloud
+from nltk.corpus import stopwords
 from matplotlib import pyplot as plt
 
 
@@ -31,7 +33,7 @@ def plot_eval(history):
     plt.legend(['train', 'test'], loc='upper left')
     plt.grid()
     plt.show()
-    plt.savefig('model_accuracy.png')
+    plt.savefig('./plots/model_accuracy.png')
 
     # summarize history for loss
     plt.plot(history['loss'])
@@ -41,10 +43,10 @@ def plot_eval(history):
     plt.legend(['train', 'test'], loc='upper left')
     plt.grid()
     plt.show()
-    plt.savefig('model_loss.png')
+    plt.savefig('./plots/model_loss.png')
 
 
-def plot_bars(dataset):
+def plot_words_count(dataset):
     sns_palette = ["rocket", "mako", "magma", "rocket_r"]
     sns.set_style("whitegrid")
     for i, book in dataset.iterrows():
@@ -57,12 +59,14 @@ def plot_bars(dataset):
         plt.xlabel('Word', fontsize=12)
         plt.xticks(rotation=90)
         plt.show()
+        plt.savefig(f'./plots/words_bar_{book["author"]}.png')
 
 
-def words_count(dataset):
-    plt.figure(figsize=(12, 4))
+def plot_compare_bars(dataset):
     words = []
     names = []
+    fig = plt.figure(figsize=(12, 4))
+    fig.set_facecolor('white')
     for i, book in dataset.iterrows():
         words.append(len(book['text'].split()))
         names.append(book['author'])
@@ -72,19 +76,19 @@ def words_count(dataset):
     plt.xlabel('Author', fontsize=12)
     plt.xticks(rotation=90)
     plt.show()
+    plt.savefig('./plots/words_count.png')
 
 
-"""def plot_cloud(dataset):
-    for book in authors:
+def plot_words_cloud(dataset):
+    for i, book in dataset.iterrows():
         wordcloud = WordCloud(background_color="white",
-                              stopwords=russian_stopwords,
+                              stopwords=stopwords.words('russian'),
                               mode="RGBA",
                               width=400,
                               height=330,
-                              colormap='inferno').generate(book['Text'][0])
-        # Display the generated image:
+                              colormap='inferno').generate(book['text'])
         plt.figure(figsize=[7, 7])
         plt.imshow(wordcloud, interpolation='bilinear')
         plt.axis("off")
         plt.show()
-"""
+        plt.savefig(f'./plots/wordcloud_{book["author"]}.png')

@@ -3,7 +3,7 @@ from simple_elmo import ElmoModel
 from data.Dataset import Dataset
 from models.cnn import CNN
 from models.elmo import Elmo
-from utils.utils import evaluate, plot_eval, plot_bars, words_count
+from utils.utils import evaluate, plot_eval, plot_bars, words_count, plot_wordscloud
 
 name_A = "Nekrasov"
 name_B = "Pushkin"

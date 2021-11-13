@@ -2,8 +2,6 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 
-from tqdm import tqdm
-from tqdm.notebook import tqdm_notebook
 from matplotlib import pyplot as plt
 from keras.optimizer_v2.adam import Adam
 from sklearn.metrics import confusion_matrix, classification_report

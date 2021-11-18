@@ -10,5 +10,5 @@ graphviz
 wordcloud
 pymystem3
 matplotlib
-tensorflow
 simple_elmo
+tensorflow-gpu

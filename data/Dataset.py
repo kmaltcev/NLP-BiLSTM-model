@@ -29,16 +29,16 @@ class Dataset:
     def preprocess(self):
         final_dataset = pd.DataFrame(columns=self.data.columns.values)
         mystem = Mystem()
-        for i in tqdm(range(2), desc='Preprocessing:'):
-            text = re.sub(r'[^ЁёА-я\s]', ' ', self.data.values[i][2])
+        for index, data_row in self.data.iterrows():
+            text = re.sub(r'[^ЁёА-я\s]', ' ', data_row['text'])
             text = ' '.join([w for w in text.split() if len(w) > 1])
             text = re.sub(r' {2,}', ' ', text)
             lemmas = mystem.lemmatize(text.lower())
-            tokens = [token for token in lemmas if token not in stopwords.words('russian')
-                      and token != " "
-                      and token.strip() not in punctuation]
+            tokens = [lemmas[i] for i in tqdm(range(len(lemmas)), desc=f"Preprocessing {data_row['author'][0]}")
+                      if lemmas[i] not in stopwords.words('russian')
+                      and lemmas[i] != " " and lemmas[i].strip() not in punctuation]
             final_dataset = final_dataset \
-                .append({"label": i, "author": self.data.values[i][1], "text": " ".join(tokens)}, ignore_index=True)
+                .append({"label": index, "author": data_row['author'], "text": " ".join(tokens)}, ignore_index=True)
         self.data = final_dataset
 
     def chunking(self, chunk_size=40):
@@ -57,6 +57,3 @@ class Dataset:
             embeddings.append(embeddder.get_elmo_vectors(data))
         self.prep_data['embeddings'] = list(np.concatenate(embeddings))
         return self.prep_data['embeddings'].shape
-        # data_as_list = list(self.prep_data['text'])
-        # self.prep_data['embeddings'] = list(embeddder.get_elmo_vectors(data_as_list))
-        # return self.prep_data['embeddings'].shape

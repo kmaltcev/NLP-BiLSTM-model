@@ -1,11 +1,11 @@
 import numpy as np
 import pandas as pd
 import seaborn as sns
-
+from keras import Model
+from keras.utils.vis_utils import plot_model
 from matplotlib import pyplot as plt
 from keras.optimizer_v2.adam import Adam
 from sklearn.metrics import confusion_matrix, classification_report
-
 from utils.utils import evaluate, plot_eval
 
 
@@ -13,20 +13,24 @@ class AbsModel:
     history = None
     model = None
     X_pred = None
-    plot_title = None
 
-    def __init__(self, learning_rate):
+    def __init__(self, input_shape, output, name, learning_rate):
         self.learning_rate = learning_rate
-
-    def fit(self, dataset, epochs=10, batch_size=50):
+        self.name = name
+        self.model = Model(inputs=input_shape, outputs=output, name="CNN")
         # compile model
         optimizer = Adam(learning_rate=self.learning_rate)
-        self.model.compile(optimizer=optimizer, loss="sparse_categorical_crossentropy", metrics=['acc'])
+        self.model.compile(optimizer=optimizer, loss="categorical_crossentropy", metrics=['accuracy'])
+        print(self.model.summary())
+        plot_model(self.model, f"./plots/{name}.png", show_shapes=True)
+
+    def fit(self, dataset, epochs=10, batch_size=50):
         # start training
-        self.history = self.model.fit(dataset.X_train, dataset.Y_train, epochs=epochs, batch_size=batch_size, verbose=2,
-                                      validation_data=(dataset.X_val, dataset.Y_val))
+        self.history = self.model.fit(dataset.X_train, dataset.Y_train_cat, epochs=epochs,
+                                      batch_size=batch_size, verbose=2,
+                                      validation_data=(dataset.X_val, dataset.X_val_cat))
         evaluate(self.model, dataset)
-        plot_eval(self.history.history, epochs, self.plot_title)
+        plot_eval(self.history.history, epochs, self.name)
         return self.history
 
     def predict(self, train_set):
@@ -40,7 +44,7 @@ class AbsModel:
         f, ax = plt.subplots(figsize=(5, 5))
         sns.heatmap(c_matrix, annot=True, linewidth=0.7, linecolor='cyan', fmt='g', ax=ax, cmap="BuPu")
 
-        plt.title(f"{self.plot_title} Classification Confusion Matrix")
+        plt.title(f"{self.name} Classification Confusion Matrix")
         plt.xlabel('Y predict')
         plt.ylabel('Y test')
         plt.show()
@@ -56,3 +60,6 @@ class AbsModel:
         X_pred = np.argmax(y_pred, axis=1)
         test_set.dataframe['label'] = X_pred
         return test_set.dataframe
+
+    def build_fn(self):
+        return self.model

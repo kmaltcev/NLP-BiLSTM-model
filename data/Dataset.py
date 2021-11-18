@@ -34,7 +34,7 @@ class Dataset:
             text = ' '.join([w for w in text.split() if len(w) > 1])
             text = re.sub(r' {2,}', ' ', text)
             lemmas = mystem.lemmatize(text.lower())
-            tokens = [lemmas[i] for i in tqdm(range(len(lemmas)), desc=f"Preprocessing {data_row['author'][0]}")
+            tokens = [lemmas[i] for i in tqdm(range(len(lemmas)), desc=f"Preprocessing {data_row['author']}")
                       if lemmas[i] not in stopwords.words('russian')
                       and lemmas[i] != " " and lemmas[i].strip() not in punctuation]
             final_dataset = final_dataset \

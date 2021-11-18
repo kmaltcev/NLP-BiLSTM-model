@@ -17,7 +17,7 @@ class AbsModel:
     def __init__(self, input_shape, output, name, learning_rate):
         self.learning_rate = learning_rate
         self.name = name
-        self.model = Model(inputs=input_shape, outputs=output, name="CNN")
+        self.model = Model(inputs=input_shape, outputs=output, name=name)
         # compile model
         optimizer = Adam(learning_rate=self.learning_rate)
         self.model.compile(optimizer=optimizer, loss="categorical_crossentropy", metrics=['accuracy'])

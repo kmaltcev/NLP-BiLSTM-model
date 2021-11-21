@@ -22,12 +22,12 @@ class Ensemble:
         self.voting.fit(self.X, self.Y)
 
     def predict_proba(self, X=None):
-        if not X:
+        if X is None:
             print("Using Testing Set for Probabilities Prediction")
         self.voting.predict_proba(X if X else self.X)
 
     def predict(self, X=None):
-        if not X:
+        if X is None:
             print("Using Testing Set for Classes Prediction")
         np.array(self.voting.predict(X if X else self.X), dtype='uint8')
 

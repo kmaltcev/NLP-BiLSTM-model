@@ -20,6 +20,7 @@ def embedding_process(author, elmo):
 
 class TestSet:
     def __init__(self, path, labels, elmo):
+        self.preds = None
         directory, self.author, self.work = path.split("/")
         self.labels = labels
         self.work, _ = self.work.split('.')
@@ -34,7 +35,7 @@ class TestSet:
             raise FileNotFoundError(path)
 
     def plot_prediction(self):
-        cnts = [len(np.where(self.dataframe['label'] == i)[0]) for i in range(2)]
+        cnts = [len(np.where(self.preds == i)[0]) for i in range(2)]
         fig = plt.figure(figsize=(12, 4))
         fig.set_facecolor('white')
 

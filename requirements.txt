@@ -4,6 +4,7 @@ numpy
 pydot
 keras
 pandas
+mlxtend
 seaborn
 sklearn
 graphviz

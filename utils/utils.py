@@ -38,8 +38,8 @@ def plot_eval(history, n_epochs, title):
     plt.show()
     plt.savefig(f'./plots/{title}_train_vs_val_loss.png')
 
-    loss_train = history['acc']
-    loss_val = history['val_acc']
+    loss_train = history['accuracy']
+    loss_val = history['val_accuracy']
     epochs = range(1, n_epochs + 1)
     plt.plot(epochs, loss_train, 'g', label='Training accuracy')
     plt.plot(epochs, loss_val, 'b', label='Validation accuracy')

@@ -18,18 +18,17 @@ class AbsModel:
         self.learning_rate = learning_rate
         self.name = name
         self.model = Model(inputs=input_shape, outputs=output, name=name)
-        # compile model
-        optimizer = Adam(learning_rate=self.learning_rate)
-        self.model.compile(optimizer=optimizer, loss="categorical_crossentropy", metrics=['accuracy'])
-        print(self.model.summary())
-        plot_model(self.model, f"./plots/{name}.png", show_shapes=True)
 
-    def fit(self, dataset, epochs=10, batch_size=50):
-        # start training
-        self.history = self.model.fit(dataset.X_train, dataset.Y_train_cat, epochs=epochs,
-                                      batch_size=batch_size, verbose=2,
-                                      validation_data=(dataset.X_val, dataset.X_val_cat))
-        evaluate(self.model, dataset)
+    def build(self):
+        self.model.compile(optimizer=Adam(learning_rate=self.learning_rate),
+                           loss="categorical_crossentropy", metrics=['accuracy'])
+        self.plot_model()
+        return self.model
+
+    def fit(self, train_set, epochs=10, batch_size=50):
+        self.history = self.model.fit(train_set.X_train, train_set.Y_train, epochs=epochs, batch_size=batch_size,
+                                      verbose=2, validation_data=(train_set.X_val, train_set.Y_val))
+        evaluate(self.model, train_set)
         plot_eval(self.history.history, epochs, self.name)
         return self.history
 
@@ -39,7 +38,7 @@ class AbsModel:
         return self.X_pred
 
     def confusion_matrix(self, train_set):
-        df_test = pd.DataFrame({'true': train_set.Y_test, 'pred': self.X_pred})
+        df_test = pd.DataFrame({'true': train_set.Y_test[:, 1], 'pred': self.X_pred})
         c_matrix = confusion_matrix(df_test.true, df_test.pred)
         f, ax = plt.subplots(figsize=(5, 5))
         sns.heatmap(c_matrix, annot=True, linewidth=0.7, linecolor='cyan', fmt='g', ax=ax, cmap="BuPu")
@@ -61,5 +60,5 @@ class AbsModel:
         test_set.dataframe['label'] = X_pred
         return test_set.dataframe
 
-    def build_fn(self):
-        return self.model
+    def plot_model(self):
+        return plot_model(self.model, f"./plots/{self.name}.png", show_shapes=True)

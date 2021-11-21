@@ -1,29 +1,37 @@
-from simple_elmo import ElmoModel
+from matplotlib import pyplot as plt
 
 from data.Dataset import Dataset
-from models.cnn import CNN
-from models.elmo import Elmo
-from utils.utils import evaluate, plot_eval, plot_bars, words_count, plot_wordscloud
+from data.TrainSet import TrainSet
+from models.merge import ELMo, CNN, BiLSTM, Ensemble
+from utils.utils import plot_words_cloud, plot_words_count, plot_compare_bars
 
-name_A = "Nekrasov"
-name_B = "Pushkin"
+names = ["Furman", "Garshin"]
 name_C = "Sholokhov"
-elmo = Elmo()
 
 if __name__ == '__main__':
-    # 1. load dataset
-    dataset = Dataset([name_A, name_B])
-    # 2. preprocess text
+    dataset = Dataset(names)
     dataset.preprocess()
-    # 3. plot some beauty
-    words_count(dataset.data)
-    plot_bars(dataset.data)
-    # 4. chunking
+    plot_words_cloud(dataset.data)
+    plot_words_count(dataset.data)
+    plot_compare_bars(dataset.data)
     dataset.chunking()
-    # 5. embedding
-    aslist = list(dataset.data['text'])
-    authors_embeddings = elmo.get_elmo_vectors(aslist)
-    dataset.set_embeddings(authors_embeddings)
-    print(dataset)
-    # cnn = CNN()
-    # bilstm = BiLSTM()
+    dataset.embedding(ELMo)
+    train_set = TrainSet(dataset.prep_data)
+    cnn = CNN(train_set.X_shape(), output_units=3)
+    cnn.build()
+    plt.figure()
+    cnn.plot_model()
+    plt.show()
+    cnn.fit(train_set)
+    bilstm = BiLSTM(train_set.X_shape(), hidden_state_dim=500)
+    bilstm.build()
+    plt.figure()
+    bilstm.plot_model()
+    plt.show()
+    bilstm.fit(train_set)
+    cnn_bilstm = Ensemble(cnn, bilstm, train_set)
+    cnn_bilstm.fit()
+    X = train_set.X_train,
+    Y = train_set.Y_train[:, 1]
+    print(cnn_bilstm.voting.predict_proba(X))
+    print(cnn_bilstm.voting.predict(X))

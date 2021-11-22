@@ -10,16 +10,11 @@ from utils.utils import evaluate, plot_eval
 
 
 class AbsModel:
-    history = None
-    model = None
-    X_pred = None
-
-    def __init__(self, input_shape, output, name, learning_rate):
-        self.learning_rate = learning_rate
-        self.name = name
-        self.model = Model(inputs=input_shape, outputs=output, name=name)
+    name, learning_rate, input_shape, fc_layer = None, None, None, None
+    model, history, X_pred = None, None, None
 
     def build(self):
+        self.model = Model(inputs=self.input_shape, outputs=self.fc_layer, name=self.name)
         self.model.compile(optimizer=Adam(learning_rate=self.learning_rate),
                            loss="categorical_crossentropy", metrics=['accuracy'])
         self.plot_model()
@@ -27,7 +22,7 @@ class AbsModel:
 
     def fit(self, train_set, epochs=10, batch_size=50):
         self.history = self.model.fit(train_set.X_train, train_set.Y_train, epochs=epochs, batch_size=batch_size,
-                                      verbose=2, validation_data=(train_set.X_val, train_set.Y_val))
+                                      verbose=2, validation_split=0.15)
         evaluate(self.model, train_set)
         plot_eval(self.history.history, epochs, self.name)
         return self.history

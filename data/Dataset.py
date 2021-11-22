@@ -1,16 +1,33 @@
 import re
+import ssl
 import nltk
 import numpy as np
 import pandas as pd
 
+from tqdm import tqdm
 from pymystem3 import Mystem
 from string import punctuation
 from nltk.corpus import stopwords
-from tqdm import tqdm
-
 from utils.utils import read_books
+from joblib import Parallel, delayed
 
+try:
+    _create_unverified_https_context = ssl._create_unverified_context
+except AttributeError:
+    pass
+else:
+    ssl._create_default_https_context = _create_unverified_https_context
 nltk.download('stopwords')
+
+
+def lemmatize(text):
+    m = Mystem()
+    lemma = m.lemmatize(' '.join(text))
+    return ''.join(lemma)
+
+
+def embedding(text, elmo):
+    return elmo().get_elmo_vectors(text)
 
 
 class Dataset:
@@ -28,15 +45,18 @@ class Dataset:
 
     def preprocess(self):
         final_dataset = pd.DataFrame(columns=self.data.columns.values)
-        mystem = Mystem()
         for index, data_row in self.data.iterrows():
             text = re.sub(r'[^ЁёА-я\s]', ' ', data_row['text'])
             text = ' '.join([w for w in text.split() if len(w) > 1])
             text = re.sub(r' {2,}', ' ', text)
-            lemmas = mystem.lemmatize(text.lower())
-            tokens = [lemmas[i] for i in tqdm(range(len(lemmas)), desc=f"Preprocessing {data_row['author']}")
-                      if lemmas[i] not in stopwords.words('russian')
-                      and lemmas[i] != " " and lemmas[i].strip() not in punctuation]
+            text = text.lower().split(' ')
+            text_batch = [text[i: i + 1000] for i in range(0, len(text), 1000)]
+            text = Parallel(n_jobs=-1)(
+                delayed(lemmatize)(t) for t in tqdm(text_batch, desc=f"Lemmatizing {data_row['author']}"))
+            text = ' '.join(text).split(' ')
+            tokens = [text[i] for i in tqdm(range(len(text)), desc=f"Preprocessing {data_row['author']}")
+                      if text[i] not in stopwords.words('russian')
+                      and text[i] != " " and text[i].strip() not in punctuation]
             final_dataset = final_dataset \
                 .append({"label": index, "author": data_row['author'], "text": " ".join(tokens)}, ignore_index=True)
         self.data = final_dataset
@@ -46,14 +66,32 @@ class Dataset:
         for idx, book in self.data.iterrows():
             words = book['text'].split()
             chunks = [words[i - chunk_size:i] for i in range(chunk_size, len(words), chunk_size)]
-            temp_df = pd.DataFrame({'label': book['label'], 'author': book['author'], 'text': chunks})
+            temp_df = pd.DataFrame({'label': book['label'], 'author': book['author'], 'text': [chunks]})
             chunked = chunked.append(temp_df)
         self.prep_data = chunked
 
-    def embedding(self, embeddder):
+    def embedding_depr(self, embeddder):
         embeddings = []
-        for i in range(2):
-            data = self.prep_data.loc[self.prep_data['label'] == i]['text']
-            embeddings.append(embeddder.get_elmo_vectors(data))
+
+        for index, data_row in tqdm(self.prep_data.iterrows(), total=self.prep_data.shape[0],
+                                    desc="ELMo embedding process:"):
+            simple_elmo = embeddder()
+            res = simple_elmo.get_elmo_vectors(data_row['text'])
+            embeddings.append(res)
+
         self.prep_data['embeddings'] = list(np.concatenate(embeddings))
+        return self.prep_data['embeddings'].shape
+
+    def embedding(self, elmo):
+        embeddings = Parallel(n_jobs=2)(delayed(embedding)(data_row['text'], elmo) for index, data_row in
+                                        tqdm(self.prep_data.iterrows(), total=self.prep_data.shape[0],
+                                             desc="ELMo embedding process:"))
+        embeddings = [list(emb) for emb in embeddings]
+        embeddings = [pd.DataFrame({'label': self.prep_data['label'].values[idx],
+                                    'author': self.prep_data['author'].values[idx],
+                                    'text': self.prep_data['text'].values[idx],
+                                    'embeddings': work})
+                      for idx, work in enumerate(embeddings)]
+
+        self.prep_data = pd.concat(embeddings)
         return self.prep_data['embeddings'].shape

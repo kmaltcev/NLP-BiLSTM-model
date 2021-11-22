@@ -14,7 +14,6 @@ def embedding_process(author, elmo):
     dataset.preprocess()
     dataset.chunking()
     dataset.embedding(elmo)
-
     return dataset.prep_data
 
 
@@ -24,6 +23,12 @@ class TestSet:
         directory, self.author, self.work = path.split("/")
         self.labels = labels
         self.work, _ = self.work.split('.')
+
+        if EMBEDDINGS_DIR not in os.listdir("./"):
+            os.mkdir(f"./{EMBEDDINGS_DIR}")
+            if self.author not in os.listdir(f"{EMBEDDINGS_DIR}/"):
+                os.mkdir(f"./{EMBEDDINGS_DIR}/{self.author}")
+
         if f"{self.work}_embeddings.csv" in os.listdir(f"./{EMBEDDINGS_DIR}/{self.author}"):
             print("Embeddings loaded successfully")
             self.dataframe = pd.read_pickle(f'./{EMBEDDINGS_DIR}/{self.author}/{self.work}_embeddings.csv')

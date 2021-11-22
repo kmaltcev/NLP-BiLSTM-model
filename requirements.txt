@@ -12,4 +12,4 @@ wordcloud
 pymystem3
 matplotlib
 simple_elmo
-tensorflow-gpu
+tensorflow

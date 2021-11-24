@@ -16,7 +16,7 @@ if __name__ == '__main__':
     plot_compare_bars(dataset.data)
     dataset.chunking()
     dataset.embedding(ELMo)
-    train_set = TrainSet(dataset.prep_data)
+    train_set = TrainSet(dataset.data)
     cnn = CNN(train_set.X_shape(), output_units=3)
     cnn.build()
     plt.figure()

@@ -31,7 +31,7 @@ def embedding(text, elmo):
 
 
 class Dataset:
-    prep_data = None
+    data = None
 
     def __init__(self, data):
         if data is None:
@@ -68,21 +68,22 @@ class Dataset:
             chunks = [words[i - chunk_size:i] for i in range(chunk_size, len(words), chunk_size)]
             temp_df = pd.DataFrame({'label': book['label'], 'author': book['author'], 'text': [chunks]})
             chunked = chunked.append(temp_df)
-        self.prep_data = chunked
-
-    def embedding_depr(self, embeddder):
-        embeddings = []
-
-        for index, data_row in tqdm(self.prep_data.iterrows(), total=self.prep_data.shape[0],
-                                    desc="ELMo embedding process:"):
-            simple_elmo = embeddder()
-            res = simple_elmo.get_elmo_vectors(data_row['text'])
-            embeddings.append(res)
-
-        self.prep_data['embeddings'] = list(np.concatenate(embeddings))
-        return self.prep_data['embeddings'].shape
+        self.data = chunked
 
     def embedding(self, elmo):
+        embeddings = [elmo().get_elmo_vectors(data_row['text']) for index, data_row in
+                      tqdm(self.data.iterrows(), total=self.data.shape[0], desc="ELMo embedding process:")]
+        embeddings = [list(emb) for emb in embeddings]
+        embeddings = [pd.DataFrame({'label': self.data['label'].values[idx],
+                                    'author': self.data['author'].values[idx],
+                                    'text': self.data['text'].values[idx],
+                                    'embeddings': work})
+                      for idx, work in enumerate(embeddings)]
+
+        self.data = pd.concat(embeddings)
+        return self.data['embeddings'].shape
+    '''
+    def embedding_par(self, elmo):
         embeddings = Parallel(n_jobs=2)(delayed(embedding)(data_row['text'], elmo) for index, data_row in
                                         tqdm(self.prep_data.iterrows(), total=self.prep_data.shape[0],
                                              desc="ELMo embedding process:"))
@@ -95,3 +96,4 @@ class Dataset:
 
         self.prep_data = pd.concat(embeddings)
         return self.prep_data['embeddings'].shape
+    '''

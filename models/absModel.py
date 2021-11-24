@@ -15,7 +15,8 @@ class AbsModel:
 
     def build(self):
         self.model = Model(inputs=self.input_shape, outputs=self.fc_layer, name=self.name)
-        self.model.compile(optimizer=Adam(learning_rate=self.learning_rate),
+        optimizer = Adam(learning_rate=self.learning_rate)
+        self.model.compile(optimizer=optimizer,
                            loss="categorical_crossentropy", metrics=['accuracy'])
         self.plot_model()
         return self.model

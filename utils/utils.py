@@ -5,18 +5,20 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 
+from utils.constants import BOOKS_DIR
 from wordcloud import WordCloud
 from nltk.corpus import stopwords
 from matplotlib import pyplot as plt
-from utils.constants import BOOKS_DIR
 
 
-def read_books(author_name):
-    books_text = ""
-    for book_name in os.listdir(f"./{BOOKS_DIR}/{author_name}"):
-        with open(f"./{BOOKS_DIR}/{author_name}/{book_name}", "r", encoding='utf8', errors='ignore') as book:
-            books_text += " " + book.read()
-    return books_text
+def read_books(names):
+    books = {}
+    for name in names:
+        books[name] = []
+        for book_name in os.listdir(f"./{BOOKS_DIR}/{name}"):
+            with open(f"./{BOOKS_DIR}/{name}/{book_name}", "r", encoding='utf8', errors='ignore') as book:
+                books[name].append(book.read())
+    return books
 
 
 def evaluate(model, dataset):

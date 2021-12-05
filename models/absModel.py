@@ -16,8 +16,7 @@ class AbsModel:
     def build(self):
         self.model = Model(inputs=self.input_shape, outputs=self.fc_layer, name=self.name)
         optimizer = Adam(learning_rate=self.learning_rate)
-        self.model.compile(optimizer=optimizer,
-                           loss="categorical_crossentropy", metrics=['accuracy'])
+        self.model.compile(optimizer=optimizer, loss="categorical_crossentropy", metrics=['accuracy'])
         self.plot_model()
         return self.model
 
@@ -38,7 +37,6 @@ class AbsModel:
         c_matrix = confusion_matrix(df_test.true, df_test.pred)
         f, ax = plt.subplots(figsize=(5, 5))
         sns.heatmap(c_matrix, annot=True, linewidth=0.7, linecolor='cyan', fmt='g', ax=ax, cmap="BuPu")
-
         plt.title(f"{self.name} Classification Confusion Matrix")
         plt.xlabel('Y predict')
         plt.ylabel('Y test')

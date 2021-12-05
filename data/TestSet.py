@@ -1,45 +1,21 @@
-import os
-
 import numpy as np
 import seaborn as sns
-
-from numpy import savez_compressed, load
 from matplotlib import pyplot as plt
-from data.Dataset import Dataset
-from utils.constants import BOOKS_DIR, EMBEDDINGS_DIR
 
-
-def embedding_process(author, elmo):
-    dataset = Dataset([author])
-    dataset.preprocess()
-    dataset.chunking()
-    embeddings = elmo().get_elmo_vectors(dataset.data['text'].tolist()[0])
-    return embeddings
+from models.merge import ELMo
+from utils.embedding_utils import load_embeddings
 
 
 class TestSet:
-    def __init__(self, path, labels, elmo):
+    def __init__(self, path, labels):
         self.preds = None
         directory, self.author, self.work = path.split("/")
         self.labels = labels
-        self.work, _ = self.work.split('.')
+        self.work, ext = self.work.split('.')
 
-        if EMBEDDINGS_DIR not in os.listdir("./"):
-            os.mkdir(f"./{EMBEDDINGS_DIR}")
-            if self.author not in os.listdir(f"{EMBEDDINGS_DIR}/"):
-                os.mkdir(f"./{EMBEDDINGS_DIR}/{self.author}")
-        if f"{self.work}_embeddings.npz" in os.listdir(f"./{EMBEDDINGS_DIR}/{self.author}"):
-            print("Embeddings loaded successfully")
-            #self.dataframe = pd.read_pickle(f'./{EMBEDDINGS_DIR}/{self.author}/{self.work}_embeddings.csv')
-            self.data = load(f'./{EMBEDDINGS_DIR}/{self.author}/{self.work}_embeddings.npz')
-            self.data = self.data['arr_0']
-        elif f"{self.work}.{_}" in os.listdir(f"./{BOOKS_DIR}/{self.author}"):
-            print("Embeddings not found, processing...")
-            self.data = embedding_process(self.author, elmo)
-            savez_compressed(f'./{EMBEDDINGS_DIR}/{self.author}/{self.work}_embeddings', self.data)
-            #self.dataframe = embedding_process(self.author, elmo)
-            #self.dataframe.to_pickle(f'./{EMBEDDINGS_DIR}/{self.author}/{self.work}_embeddings.csv')
-        else:
+        self.data = load_embeddings(self.author, ELMo)
+
+        if self.data is None:
             raise FileNotFoundError(path)
 
     def plot_prediction(self):
@@ -53,4 +29,3 @@ class TestSet:
         plt.xticks(rotation=90)
         plt.show()
         plt.savefig(f"./plots/{self.author}_{self.work}.png")
-

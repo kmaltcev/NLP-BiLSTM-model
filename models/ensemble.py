@@ -2,8 +2,6 @@ import numpy as np
 from keras.wrappers.scikit_learn import KerasClassifier
 from mlxtend.classifier import EnsembleVoteClassifier
 
-from utils.utils import evaluate, plot_eval
-
 
 class Ensemble:
     model = None
@@ -39,4 +37,3 @@ class Ensemble:
         if X is None:
             print("Using Testing Set for Classes Prediction")
         return np.array(self.model.predict(X if X else self.train_set.X_test), dtype='uint8')
-

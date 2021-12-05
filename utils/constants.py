@@ -1,3 +1,3 @@
 BOOKS_DIR = 'books'
-EMBEDDINGS_DIR = 'embeddings'
+EMBEDDINGS_DIR = 'C:/embeddings'
 

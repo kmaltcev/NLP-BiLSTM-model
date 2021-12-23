@@ -17,7 +17,8 @@ def read_books(names):
         books[name] = []
         for book_name in os.listdir(f"./{BOOKS_DIR}/{name}"):
             with open(f"./{BOOKS_DIR}/{name}/{book_name}", "r", encoding='utf8', errors='ignore') as book:
-                books[name].append(book.read())
+                book = book.read()
+                books[name].append(book[:int(len(book) / 100)])
     return books
 
 
@@ -56,17 +57,25 @@ def plot_eval(history, n_epochs, title):
 def plot_words_count(dataset):
     sns_palette = ["rocket", "mako", "magma", "rocket_r"]
     sns.set_style("whitegrid")
+    figs = []
     for i, book in dataset.iterrows():
-        cnt_pro = np.asarray(Counter(book['text'].split()).most_common(20))
-        occ_df = pd.DataFrame({'word': cnt_pro[:, 0], 'count': [int(num) for num in cnt_pro[:, 1]]})
-        plt.figure(figsize=(12, 4))
+        words = book['text'].split()
+        length = len(words)
+        counters = Counter(words)
+        cnt_pro = np.asarray(counters.most_common(20))
+        probs = [int(num) / length for num in cnt_pro[:, 1]]
+
+        occ_df = pd.DataFrame({'word': cnt_pro[:, 0],
+                               'count': probs})
+        fig = plt.figure(figsize=(12, 4))
         sns.barplot(x='word', y='count', alpha=0.8, data=occ_df, palette=sns_palette[i])
         plt.title(book['author'])
         plt.ylabel('Frequency', fontsize=12)
-        plt.xlabel('Word', fontsize=12)
+        plt.xlabel(f'Word', fontsize=12)
         plt.xticks(rotation=90)
-        plt.show()
+        figs.append(fig)
         plt.savefig(f'./plots/words_bar_{book["author"]}.png')
+    return figs
 
 
 def plot_compare_bars(dataset):
@@ -82,8 +91,9 @@ def plot_compare_bars(dataset):
     plt.ylabel('Length of works', fontsize=12)
     plt.xlabel('Author', fontsize=12)
     plt.xticks(rotation=90)
-    plt.show()
+    # plt.show()
     plt.savefig('./plots/words_count.png')
+    return fig
 
 
 def plot_words_cloud(dataset):
@@ -94,11 +104,12 @@ def plot_words_cloud(dataset):
                               width=400,
                               height=330,
                               colormap='inferno').generate(book['text'])
-        plt.figure(figsize=[7, 7])
+        fig = plt.figure(figsize=[7, 7])
         plt.imshow(wordcloud, interpolation='bilinear')
         plt.axis("off")
         plt.show()
         plt.savefig(f'./plots/wordcloud_{book["author"]}.png')
+        return fig
 
 
 def plot_scores(score_a, score_b):

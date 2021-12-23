@@ -26,11 +26,13 @@ class Dataset:
         if names is None:
             raise ValueError("No data provided")
         books = read_books(names)
-        self.data = pd.DataFrame(columns=["label", "author", "text"])
+        self.data = pd.DataFrame(columns=["label", "author", "text", "lenght"])
         for idx, name in enumerate(names):
+            text = " ".join(books[name])
             self.data = self.data.append({"label": idx,
                                           "author": name,
-                                          "text": " ".join(books[name])}, ignore_index=True)
+                                          "text": text,
+                                          "lenght": len(text)}, ignore_index=True)
 
     def __str__(self):
         return str(self.data)
@@ -49,9 +51,11 @@ class Dataset:
             tokens = [text[i] for i in tqdm(range(len(text)), desc=f"Preprocessing {data_row['author']}")
                       if text[i] not in stopwords.words('russian')
                       and text[i] != " " and text[i].strip() not in punctuation]
+            text = " ".join(tokens)
             final_dataset = final_dataset.append({"label": index,
                                                   "author": data_row['author'],
-                                                  "text": " ".join(tokens)}, ignore_index=True)
+                                                  "text": text,
+                                                  "lenght": len(text)}, ignore_index=True)
         self.data = final_dataset
 
     def chunking(self, chunk_size=40):

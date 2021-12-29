@@ -5,7 +5,9 @@ from keras.layers import Input, Conv1D, GlobalMaxPooling1D, Concatenate, Dense, 
 class CNN(AbsModel):
     def __init__(self, shape, num_filters=200, kernel_size: list = None,
                  use_bias=True, dropout_rate=.5, fc_layer_size=100,
-                 learning_rate=0.001, output_units=3):
+                 learning_rate=0.001, output_units=3,epochs=10, batch_size=50):
+        self.epochs = epochs
+        self.batch_size = batch_size
         self.name = "CNN"
         self.learning_rate = learning_rate
         if shape is None:

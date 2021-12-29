@@ -10,7 +10,6 @@ from wordcloud import WordCloud
 from nltk.corpus import stopwords
 from matplotlib import pyplot as plt
 
-
 def read_books(names):
     books = {}
     for name in names:
@@ -54,7 +53,7 @@ def plot_eval(history, n_epochs, title):
     plt.savefig(f'./plots/{title}_train_vs_val_acc.png')
 
 
-def plot_words_count(dataset):
+def plot_words_count(dataset,path):
     sns_palette = ["rocket", "mako", "magma", "rocket_r"]
     sns.set_style("whitegrid")
     figs = []
@@ -74,11 +73,11 @@ def plot_words_count(dataset):
         plt.xlabel(f'Word', fontsize=12)
         plt.xticks(rotation=90)
         figs.append(fig)
-        plt.savefig(f'./plots/words_bar_{book["author"]}.png')
+        plt.savefig(f'{path}/words_bar_{book["author"]}.png')
     return figs
 
 
-def plot_compare_bars(dataset):
+def plot_compare_bars(dataset,path):
     words = []
     names = []
     fig = plt.figure(figsize=(12, 4))
@@ -92,7 +91,7 @@ def plot_compare_bars(dataset):
     plt.xlabel('Author', fontsize=12)
     plt.xticks(rotation=90)
     # plt.show()
-    plt.savefig('./plots/words_count.png')
+    plt.savefig(f'{path}/words_count.png')
     return fig
 
 
@@ -110,7 +109,6 @@ def plot_words_cloud(dataset):
         plt.show()
         plt.savefig(f'./plots/wordcloud_{book["author"]}.png')
         return fig
-
 
 def plot_scores(score_a, score_b):
     data = {'abbrev': ['CNN', 'BiLSTM'],

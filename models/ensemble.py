@@ -6,17 +6,15 @@ from mlxtend.classifier import EnsembleVoteClassifier
 class Ensemble:
     model = None
 
-    def __init__(self, train_set, epochs=10, batch_size=50):
-        self.batch_size = batch_size
-        self.epochs = epochs
+    def __init__(self, train_set):
         self.name = "CNN-BiLSTM"
         self.train_set = train_set
         self.X = train_set.X_train
         self.Y = train_set.Y_train[:, 1]
         self.clfs = []
 
-    def add(self, model, epochs=10, batch_size=50):
-        clf = KerasClassifier(build_fn=model.build, epochs=epochs, batch_size=batch_size)
+    def add(self, model):
+        clf = KerasClassifier(build_fn=model.build, epochs=model.epochs, batch_size=model.batch_size)
         clf._estimator_type = "classifier"
         clf.fit(self.X, self.train_set.Y_train)
         self.clfs.append(clf)

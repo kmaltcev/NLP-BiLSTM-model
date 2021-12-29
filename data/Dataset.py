@@ -68,7 +68,8 @@ class Dataset:
         self.data = chunked
 
     def embedding(self, elmo):
-        self.embeddings = [elmo().get_elmo_vectors(data_row['text']) for index, data_row in
+        
+        self.embeddings = [elmo().get_elmo_vectors(data_row['text']) for index, data_row in \
                            tqdm(self.data.iterrows(), total=self.data.shape[0], desc="ELMo embedding process:")]
         list_embeddings = [list(emb) for emb in self.embeddings]
         list_embeddings = [pd.DataFrame({'label': self.data['label'].values[idx],

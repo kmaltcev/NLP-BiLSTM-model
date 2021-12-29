@@ -4,8 +4,11 @@ from keras.layers import Input, LSTM, Bidirectional, Dense, Dropout
 
 class BiLSTM(AbsModel):
     def __init__(self, shape, hidden_state_dim=200, dropout_rate=.2,
-                 fc_layer_size=30, learning_rate=0.001, output_units=3):
+                 fc_layer_size=30, learning_rate=0.001, output_units=3,
+                 epochs = 10, batch_size = 50):
         self.name = "BiLSTM"
+        self.epochs = epochs
+        self.batch_size = batch_size
         self.learning_rate = learning_rate
         if shape is None:
             raise AttributeError('Input shape not set')

@@ -1,0 +1,4 @@
+Move plot.model to utils
+Add path to plot_model
+Add README.md
+Add pytests

@@ -3,7 +3,7 @@ from matplotlib import pyplot as plt
 from data.Dataset import Dataset
 from data.TrainSet import TrainSet
 from models.merge import ELMo, CNN, BiLSTM, Ensemble
-from utils.utils import plot_words_cloud, plot_words_count, plot_compare_bars
+from utils.utils import plot_words_cloud, plot_words_bar, plot_compare_bars
 
 names = ["Furman", "Garshin"]
 name_C = "Sholokhov"
@@ -12,10 +12,10 @@ if __name__ == '__main__':
     dataset = Dataset(names)
     dataset.preprocess()
     plot_words_cloud(dataset.data)
-    plot_words_count(dataset.data)
+    plot_words_bar(dataset.data)
     plot_compare_bars(dataset.data)
     dataset.chunking()
-    dataset.embedding(ELMo)
+    dataset.create_embedding(ELMo)
     train_set = TrainSet(dataset.data)
     cnn = CNN(train_set.X_shape(), output_units=3)
     cnn.build()

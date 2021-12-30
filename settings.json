@@ -53,7 +53,7 @@
       },
       "learning_rate":{
         "label": "Learning rate",
-        "min_value": 0.001,
+        "min_value": 0.0001,
         "max_value": 1.0,
         "value": 0.001,
         "step": 0.001,
@@ -131,11 +131,11 @@
       },
       "learning_rate":{
         "label": "Learning rate",
-        "min_value": 0.001,
+        "min_value": 0.0001,
         "max_value": 1.0,
         "value": 0.001,
         "step": 0.001,
-        "format": "%.3f"
+        "format": "%.4f"
       },
       "epochs":{
         "label": "Number of epochs",

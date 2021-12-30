@@ -20,7 +20,8 @@ class Ensemble:
         self.clfs.append(clf)
 
     def build(self):
-        self.model = EnsembleVoteClassifier(clfs=self.clfs, voting='soft', fit_base_estimators=False)
+        self.model = EnsembleVoteClassifier(clfs=self.clfs, voting='soft',
+                                            fit_base_estimators=False)
 
     def fit(self):
         history = self.model.fit(self.X, self.Y)
@@ -29,9 +30,11 @@ class Ensemble:
     def predict_proba(self, X=None):
         if X is None:
             print("Using Testing Set for Probabilities Prediction")
-        return self.model.predict_proba(X if X else self.X)
+            X = self.X
+        return self.model.predict_proba(X)
 
     def predict(self, X=None):
         if X is None:
             print("Using Testing Set for Classes Prediction")
-        return np.array(self.model.predict(X if X else self.train_set.X_test), dtype='uint8')
+            X = self.train_set.X_train
+        return np.array(self.model.predict(X), dtype='uint8')

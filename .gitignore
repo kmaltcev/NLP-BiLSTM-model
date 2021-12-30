@@ -1,5 +1,7 @@
 /.idea/
+/.vscode/
 /.ipynb_checkpoints
 /elmo/
 /embeddings/
 /plots/
+/venv/

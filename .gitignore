@@ -1,8 +1,11 @@
 /.idea/
 /.vscode/
 /.ipynb_checkpoints
+/.run/
 /elmo/
 /embeddings/
 /plots/
 /venv/
 __pycache__/
+/final_project.egg-info/
+/dist/

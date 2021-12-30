@@ -1,19 +1,14 @@
 import json
 import os
-import nltk
 
 import streamlit as st
 import tensorflow as tf
 from data.Dataset import Dataset
-#from data.TestSet import TestSet
 from data.TrainSet import TrainSet
-from utils.constants import BOOKS_DIR
 from models.merge import ELMo, CNN, BiLSTM, Ensemble
-from utils.utils import plot_words_cloud, plot_words_bar, plot_compare_bars, plot_prediction
-from data_objects.experiment_params import ExperimentsParams
+from utils.utils import plot_compare_bars, plot_prediction
+from utils.experiment_params import ExperimentsParams
 
-# Download stopwords
-# nltk.download('stopwords')
 # Set streamlit configuration
 st.set_page_config(page_title="Plagiarism detection", initial_sidebar_state="expanded", layout="wide")
 

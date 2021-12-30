@@ -96,7 +96,6 @@ def plot_compare_bars(dataset, path):
     plt.ylabel('Length of works', fontsize=12)
     plt.xlabel('Author', fontsize=12)
     plt.xticks(rotation=90)
-    # plt.show()
     plt.savefig(f'{path}/words_count.png')
     return fig
 

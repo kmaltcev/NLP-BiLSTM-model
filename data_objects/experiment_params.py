@@ -10,7 +10,7 @@ class ExperimentsParams:
         self.path_to_plot = self.prepare_experiment()
 
     def prepare_experiment(self):
-        path = "./plots/{self.author_under_test}"
+        path = f"./plots/{self.author_under_test}"
         if not os.path.isdir(path):
             os.mkdir(path)
         path = f"{path}/{self.first_impostor}_{self.second_impostor}"

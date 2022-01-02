@@ -50,7 +50,7 @@ def plot_eval(history, n_epochs, title):
     epochs = range(1, n_epochs + 1)
     plt.plot(epochs, loss_train, 'g', label='Training accuracy')
     plt.plot(epochs, loss_val, 'b', label='Validation accuracy')
-    plt.title('Training and Validation accuracy')
+    plt.title(f'{title} Training and Validation accuracy')
     plt.xlabel('Epochs')
     plt.ylabel('Accuracy')
     plt.legend()
@@ -171,3 +171,7 @@ def load_embeddings(creation, elmo):
         data = elmo().get_elmo_vectors(creation['text'])
         savez_compressed(f"{EMBEDDINGS_DIR}/{creation['author']}/{creation['author']}_embeddings", data)
     return data
+
+
+def convert_embeddings_to_tensor(array):
+    return np.array([np.array(row) for row in array])

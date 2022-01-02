@@ -88,12 +88,12 @@ class Dataset:
         self.embeddings = [load_embeddings(data_row, elmo) for index, data_row in
                            tqdm(self.data.iterrows(), total=self.data.shape[0], desc="ELMo embedding process")]
 
-        # self.embeddings = [elmo().get_elmo_vectors(data_row['text']) for index, data_row in
-        #                  tqdm(self.data.iterrows(), total=self.data.shape[0], desc="ELMo embedding process")]
-        list_embeddings = [list(emb) for emb in self.embeddings]
+        min_len = min([x.shape[0] for x in self.embeddings])
+
+        list_embeddings = [list(emb[:min_len]) for emb in self.embeddings]
         list_embeddings = [pd.DataFrame({'label': self.data['label'].values[idx],
                                          'author': self.data['author'].values[idx],
-                                         'text': self.data['text'].values[idx],
+                                         'text': self.data['text'].values[idx][:min_len],
                                          'embeddings': work})
                            for idx, work in enumerate(list_embeddings)]
         self.data = pd.concat(list_embeddings)

@@ -20,15 +20,15 @@ class Ensemble:
         clf._estimator_type = "classifier"
         history = clf.fit(self.X, self.train_set.Y_train)
         self.clfs.append(clf)
-        # TODO Return loss/acc plots
-        # return plot_eval(history.history, len(history.epoch), model.name)
+        return plot_eval(history.history, len(history.epoch), model.name)
 
     def build(self):
-        self.model = EnsembleVoteClassifier(clfs=self.clfs, voting='soft')  # ,fit_base_estimators=False)
+        self.model = EnsembleVoteClassifier(clfs=self.clfs, voting='soft', fit_base_estimators=False)
 
     def fit(self):
-        history = self.model.fit(self.X, self.Y)
-        return history
+        self.model.fit(self.X, self.Y)
+        # history = self.model.fit(self.X, self.Y)
+        # return history
 
     def predict_proba(self, X=None):
         if X is None:

@@ -20,35 +20,38 @@ def read_books(names):
         for book_name in os.listdir(f"./{BOOKS_DIR}/{name}"):
             with open(f"./{BOOKS_DIR}/{name}/{book_name}", "r", encoding='utf8', errors='ignore') as book:
                 book = book.read()
-                books[name].append({book_name: book})  # [:int(len(book) / 100)])
+                books[name].append({book_name: book})
     return books
 
 
 def plot_eval(history, n_epochs, title):
-    fig_1 = plt.figure()
-    cmap = (color for color in ['g', 'b'])
+    cmap = circular(['g', 'b'])
     epochs = range(1, n_epochs + 1)
 
-    loss_train = history['loss']
-    loss_val = history['val_loss']
-    plt.plot(epochs, loss_train, 'g', label='Training loss')
-    plt.plot(epochs, loss_val, 'b', label='Validation loss')
+    fig_1 = plt.figure()
+    labels = (label for label in ['Training loss', 'Validation loss'])
     plt.title(f'{title} Training and Validation loss')
+    for k in {'loss', 'val_loss'}.intersection(history.keys()):
+        v = history[k]
+        plt.plot(epochs, v, next(cmap), label=next(labels))
+        plt.xlabel(k)
     plt.xlabel('Epochs')
     plt.ylabel('Loss')
     plt.legend()
     plt.savefig(f'./plots/{title}_train_vs_val_loss.png')
 
     fig_2 = plt.figure()
-    loss_train = history['accuracy']
-    loss_val = history['val_accuracy']
-    plt.plot(epochs, loss_train, 'g', label='Training accuracy')
-    plt.plot(epochs, loss_val, 'b', label='Validation accuracy')
+    labels = (label for label in ['Training accuracy', 'Validation accuracy'])
     plt.title(f'{title} Training and Validation accuracy')
+    for k in {'accuracy', 'val_accuracy'}.intersection(history.keys()):
+        v = history[k]
+        plt.plot(epochs, v, next(cmap), label=next(labels))
+        plt.xlabel(k)
     plt.xlabel('Epochs')
     plt.ylabel('Accuracy')
     plt.legend()
     plt.savefig(f'./plots/{title}_train_vs_val_acc.png')
+
     return fig_1, fig_2
 
 
@@ -188,3 +191,9 @@ def lemmatize(text):
 
 def embedding(text, elmo):
     return elmo().get_elmo_vectors(text)
+
+
+def circular(array):
+    while True:
+        for connection in array:
+            yield connection

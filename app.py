@@ -7,7 +7,7 @@ from data.Dataset import Dataset
 from data.TestSet import TestSet
 from data.TrainSet import TrainSet
 from models.merge import ELMo, CNN, BiLSTM, Ensemble
-from utils.utils import plot_compare_bars, plot_prediction, convert_embeddings_to_tensor
+from utils.utils import plot_compare_bars, plot_prediction, convert_embeddings_to_tensor, circular
 from utils.experiment_params import ExperimentsParams
 
 
@@ -19,6 +19,7 @@ def preprocess(dataset):
     dataset.chunking()
     with st.spinner(text="Embedding in progress..."):
         dataset.create_embedding(ELMo)
+
 
 # Set streamlit configuration
 st.set_page_config(page_title="Plagiarism detection", initial_sidebar_state="expanded", layout="wide")
@@ -59,7 +60,7 @@ if base_dir:
             st.markdown(f"### Impostor 1: {impostor1}, Impostor 2: {impostor2}, Test author: {author_under_test}")
             authors_pair = [impostor1, impostor2]
             cols = st.columns([1, 1, 1, 1])
-            col = (cols[i] for i in range(len(cols)))
+            col = circular(cols)
             params = ExperimentsParams(author_under_test, creation_under_test, impostor1, impostor2)
             raw_train_set = Dataset(authors_pair)
             preprocess(raw_train_set)
@@ -96,15 +97,19 @@ if base_dir:
             cnn_bilstm = Ensemble(train_set)
 
             with st.spinner(text="CNN Training in progress..."):
-                cnn_bilstm.add(cnn)
-              #  loss_fig, acc_fig = cnn_bilstm.add(cnn)
+                loss_fig, acc_fig = cnn_bilstm.add(cnn)
             with next(col):
                 st.pyplot(loss_fig)
             with next(col):
                 st.pyplot(acc_fig)
 
             with st.spinner(text="BiLSTM Training in progress..."):
-                cnn_bilstm.add(bilstm)
+                loss_fig, acc_fig = cnn_bilstm.add(bilstm)
+                with next(col):
+                    st.pyplot(loss_fig)
+                with next(col):
+                    st.pyplot(acc_fig)
+
             with st.spinner(text="Ensemble Training in progress..."):
                 cnn_bilstm.build()
                 cnn_bilstm.fit()

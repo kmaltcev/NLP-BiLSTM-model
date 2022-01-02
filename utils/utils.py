@@ -4,6 +4,7 @@ from collections import Counter
 import numpy as np
 import pandas as pd
 import seaborn as sns
+from pymystem3 import Mystem
 
 from utils.constants import BOOKS_DIR, EMBEDDINGS_DIR
 from wordcloud import WordCloud
@@ -19,23 +20,17 @@ def read_books(names):
         for book_name in os.listdir(f"./{BOOKS_DIR}/{name}"):
             with open(f"./{BOOKS_DIR}/{name}/{book_name}", "r", encoding='utf8', errors='ignore') as book:
                 book = book.read()
-                books[name].append(book)  # [:int(len(book) / 100)])
+                books[name].append({book_name: book})  # [:int(len(book) / 100)])
     return books
-
-
-'''
-def evaluate(model, dataset):
-    _, train_acc = model.evaluate(dataset.X_train, dataset.Y_train, verbose=2)
-    # _, test_acc = model.evaluate(dataset.X_test, dataset.Y_test, verbose=2)
-    # print('Train: %.3f, Test: %.4f' % (train_acc, test_acc))
-'''
 
 
 def plot_eval(history, n_epochs, title):
     fig_1 = plt.figure()
+    cmap = (color for color in ['g', 'b'])
+    epochs = range(1, n_epochs + 1)
+
     loss_train = history['loss']
     loss_val = history['val_loss']
-    epochs = range(1, n_epochs + 1)
     plt.plot(epochs, loss_train, 'g', label='Training loss')
     plt.plot(epochs, loss_val, 'b', label='Validation loss')
     plt.title(f'{title} Training and Validation loss')
@@ -47,7 +42,6 @@ def plot_eval(history, n_epochs, title):
     fig_2 = plt.figure()
     loss_train = history['accuracy']
     loss_val = history['val_accuracy']
-    epochs = range(1, n_epochs + 1)
     plt.plot(epochs, loss_train, 'g', label='Training accuracy')
     plt.plot(epochs, loss_val, 'b', label='Validation accuracy')
     plt.title(f'{title} Training and Validation accuracy')
@@ -146,10 +140,20 @@ def plot_scores(score_a, score_b, path):
 
 
 def plot_prediction(preds, labels, path):
-    cnts = [len(np.where(preds == i)[0]) for i in range(2)]
     fig = plt.figure()
+
+    graph_data = pd.DataFrame(columns=["book", "label", "count"])
+    for k, v in preds.items():
+        for i in range(2):
+            counts = len(np.where(v == i)[0])
+            graph_data = graph_data.append({"book": k, "label": labels[i], "count": counts}, ignore_index=True)
+
+    mean_series = [graph_data[graph_data['label'] == labels[i]]['count'].mean() for i in range(2)]
+    threshold = max(mean_series) * 0.05
+
     fig.set_facecolor('white')
-    sns.barplot(labels, cnts, alpha=0.8)
+    graph = sns.barplot(x="book", y="count", alpha=0.8, hue="label", data=graph_data)
+    graph.axhline(threshold)
     plt.title("Chunks Distribution")
     plt.ylabel('Chunk', fontsize=12)
     plt.xlabel('Author', fontsize=12)
@@ -158,20 +162,29 @@ def plot_prediction(preds, labels, path):
     return fig
 
 
-def load_embeddings(creation, elmo):
+def load_embeddings(creation, elmo, book=None):
     if creation['author'] not in os.listdir(f"{EMBEDDINGS_DIR}/"):
         os.mkdir(f"{EMBEDDINGS_DIR}/{creation['author']}")
-    if f"{creation['author']}_embeddings.npz" in os.listdir(f"{EMBEDDINGS_DIR}/{creation['author']}"):
-        print(f"{creation['author']} embeddings loading...")
-        data = load(f"{EMBEDDINGS_DIR}/{creation['author']}/{creation['author']}_embeddings.npz")
+    search_q = creation['book'].split('.')[0] if book else creation['author']
+
+    if f"{search_q}_embeddings.npz" in os.listdir(f"{EMBEDDINGS_DIR}/{creation['author']}"):
+        data = load(f"{EMBEDDINGS_DIR}/{creation['author']}/{search_q}_embeddings.npz")
         data = data['arr_0']
-        print(f"{creation['author']} embeddings loaded successfully.")
     else:
-        print(f"{creation['author']} embeddings not found, processing...")
         data = elmo().get_elmo_vectors(creation['text'])
-        savez_compressed(f"{EMBEDDINGS_DIR}/{creation['author']}/{creation['author']}_embeddings", data)
+        savez_compressed(f"{EMBEDDINGS_DIR}/{creation['author']}/{search_q}_embeddings", data)
     return data
 
 
 def convert_embeddings_to_tensor(array):
     return np.array([np.array(row) for row in array])
+
+
+def lemmatize(text):
+    m = Mystem()
+    lemma = m.lemmatize(' '.join(text))
+    return ''.join(lemma)
+
+
+def embedding(text, elmo):
+    return elmo().get_elmo_vectors(text)

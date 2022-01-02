@@ -62,19 +62,11 @@
         "step": 0.1,
         "format": "%.2f"
       },
-      "learning_rate":{
-        "label": "Learning rate",
-        "min_value": 0.0001,
-        "max_value": 1.0,
-        "value": 0.001,
-        "step": 0.001,
-        "format": "%.4f"
-      },
       "epochs":{
         "label": "Number of epochs",
         "min_value": 1,
         "max_value": 100,
-        "value": 10,
+        "value": 20,
         "step": 1,
         "format": "%d"
       },
@@ -115,20 +107,12 @@
         "step": 0.1,
         "format": "%.2f"
       },
-      "learning_rate":{
-        "label": "Learning rate",
-        "min_value": 0.0001,
-        "max_value": 1.0,
-        "value": 0.001,
-        "step": 0.001,
-        "format": "%.3f"
-      },
       "epochs":
       {
         "label": "Number of epochs",
         "min_value": 1,
         "max_value": 100,
-        "value": 10,
+        "value": 20,
         "step": 1,
         "format": "%d"
       },

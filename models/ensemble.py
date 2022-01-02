@@ -2,6 +2,8 @@ import numpy as np
 from keras.wrappers.scikit_learn import KerasClassifier
 from mlxtend.classifier import EnsembleVoteClassifier
 
+from utils.utils import plot_eval
+
 
 class Ensemble:
     model = None
@@ -16,12 +18,13 @@ class Ensemble:
     def add(self, model):
         clf = KerasClassifier(build_fn=model.build, epochs=model.epochs, batch_size=model.batch_size)
         clf._estimator_type = "classifier"
-        clf.fit(self.X, self.train_set.Y_train)
+        history = clf.fit(self.X, self.train_set.Y_train)
         self.clfs.append(clf)
+        # TODO Return loss/acc plots
+        # return plot_eval(history.history, len(history.epoch), model.name)
 
     def build(self):
-        self.model = EnsembleVoteClassifier(clfs=self.clfs, voting='soft',
-                                            fit_base_estimators=False)
+        self.model = EnsembleVoteClassifier(clfs=self.clfs, voting='soft')  # ,fit_base_estimators=False)
 
     def fit(self):
         history = self.model.fit(self.X, self.Y)

@@ -1,7 +1,6 @@
 import os
 import io
 import nltk
-import wget
 import zipfile
 import requests
 import conda.cli

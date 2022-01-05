@@ -45,7 +45,7 @@ with open('settings.json') as f:
     settings = json.load(f)
 
 # Base data directory path
-base_dir = st.sidebar.text_input("Path to data", value="books")
+base_dir = st.sidebar.text_input("Path to data", value="./books")
 
 if base_dir:
     all_data = os.listdir(base_dir)
@@ -53,7 +53,7 @@ if base_dir:
     first_impostor = st.sidebar.multiselect("Impostor1", all_data)
     second_impostor = st.sidebar.multiselect("impostor2", [data for data in all_data if data not in first_impostor])
     author_under_test = st.sidebar.selectbox("Author under test", all_data)
-    creation_under_test = st.sidebar.selectbox("Creation under test", os.listdir(f"./{base_dir}/{author_under_test}"))
+    creation_under_test = st.sidebar.selectbox("Creation under test", os.listdir(f"{base_dir}/{author_under_test}"))
     compute_distance = st.sidebar.button("Start training!")
     # Hyper-Parameters controls
     sb_cols = st.sidebar.columns([1, 1])
@@ -61,11 +61,14 @@ if base_dir:
         with sb_cols[i]:
             parameters[category_key] = dict()
             f'{category_key}'
+            parameters[category_key]['lr'] = float(
+                st.text_input(label='Learning rate', value=0.0001, key=i, max_chars=6))
             for j, (label, config) in enumerate(category_param_list.items()):
                 parameters[category_key][label] = st.number_input(config['label'], config['min_value'],
                                                                   config['max_value'], config['value'],
                                                                   config['step'], key=(i + j + 3),
                                                                   format=config['format'])
+
     if compute_distance:
         for impostor1, impostor2 in zip(first_impostor, second_impostor):
             st.markdown(f"### Impostor 1: {impostor1}, Impostor 2: {impostor2}, Test author: {author_under_test}")
@@ -93,22 +96,16 @@ if base_dir:
                                    parameters["CNN"]["kernel_size_3"]],
                       dropout_rate=parameters["CNN"]["dropout_rate"],
                       fc_layer_size=parameters["CNN"]["fc_layer_size"],
-                      learning_rate=0.0001,
+                      learning_rate=parameters["CNN"]['lr'],
                       epochs=parameters["CNN"]["epochs"],
                       batch_size=parameters["CNN"]["batch_size"])
-            # cnn.build()
-            # loss_fig, acc_fig = cnn.fit(train_set, params.path_to_plot)
-            # plot_by_cols(loss_fig, acc_fig)
             bilstm = BiLSTM(train_set.X_shape(),
                             hidden_state_dim=parameters["BiLSTM"]["hidden_state_dim"],
                             dropout_rate=parameters["BiLSTM"]["dropout_rate"],
                             fc_layer_size=parameters["BiLSTM"]["fc_layer_size"],
-                            learning_rate=0.0001,
+                            learning_rate=parameters["BiLSTM"]['lr'],
                             epochs=parameters["BiLSTM"]["epochs"],
                             batch_size=parameters["BiLSTM"]["batch_size"])
-            # bilstm.build()
-            # loss_fig, acc_fig = bilstm.fit(train_set, params.path_to_plot)
-            # plot_by_cols(loss_fig, acc_fig)
             cnn_bilstm = Ensemble(train_set)
 
             with st.spinner(text="CNN Training in progress..."):
@@ -121,7 +118,7 @@ if base_dir:
                 cnn_bilstm.build()
                 cnn_bilstm.fit()
 
-                test_set = TestSet(author_under_test)
+            test_set = TestSet(author_under_test)
             preprocess(test_set)
 
             preds = dict()

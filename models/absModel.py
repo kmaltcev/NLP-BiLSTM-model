@@ -13,14 +13,13 @@ class AbsModel:
         self.model = Model(inputs=self.input_shape, outputs=self.fc_layer, name=self.name)
         optimizer = Adam(learning_rate=self.learning_rate)
         self.model.compile(optimizer=optimizer, loss="categorical_crossentropy", metrics=['accuracy'])
-        # self.plot_model()
         return self.model
 
-    def fit(self, train_set):
+    def fit(self, train_set, path_to_plot):
         self.history = self.model.fit(train_set.X_train, train_set.Y_train,
                                       epochs=self.epochs, batch_size=self.batch_size,
                                       verbose=2, validation_split=.2)
-        return plot_eval(self.history.history, self.epochs, self.name)
+        return plot_eval(self.history.history, self.epochs, self.name, path_to_plot)
 
     def predict(self, train_set):
         y_pred = self.model.predict(train_set.X_test)

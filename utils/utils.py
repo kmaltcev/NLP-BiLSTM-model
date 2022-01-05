@@ -13,6 +13,28 @@ from matplotlib import pyplot as plt
 from numpy import savez_compressed, load
 
 
+def build_graph_data_summary(dataframe, imp1, imp2, test_creation):
+    A = dataframe[dataframe['book'] != test_creation][dataframe['label'] == imp1]
+    Apd = pd.DataFrame({
+        "book": "Sum",
+        "label": A['label'].values[0],
+        "count": A['count'].sum()
+    }, index=[0])
+
+    B = dataframe[dataframe['book'] != test_creation][dataframe['label'] == imp2]
+    Bpd = pd.DataFrame({
+        "book": "Sum",
+        "label": B['label'].values[0],
+        "count": B['count'].sum()
+    }, index=[1])
+
+    Test = dataframe[dataframe['book'] == test_creation]
+    ratio = (Apd['count'].sum() + Bpd['count'].sum()) / Test['count'].sum()
+    Test.at[Test.index[0], 'count'] = Test['count'].values[0] * ratio
+    Test.at[Test.index[1], 'count'] = Test['count'].values[1] * ratio
+    return pd.concat([Apd, Bpd, Test])
+
+
 def read_books(names):
     books = {}
     for name in names:
@@ -24,7 +46,7 @@ def read_books(names):
     return books
 
 
-def plot_eval(history, n_epochs, title):
+def plot_eval(history, n_epochs, title, path_to_plot):
     cmap = circular(['g', 'b'])
     epochs = range(1, n_epochs + 1)
 
@@ -38,7 +60,7 @@ def plot_eval(history, n_epochs, title):
     plt.xlabel('Epochs')
     plt.ylabel('Loss')
     plt.legend()
-    plt.savefig(f'./plots/{title}_train_vs_val_loss.png')
+    plt.savefig(f'./{path_to_plot}/{title}_train_vs_val_loss.png')
 
     fig_2 = plt.figure()
     labels = (label for label in ['Training accuracy', 'Validation accuracy'])
@@ -50,7 +72,7 @@ def plot_eval(history, n_epochs, title):
     plt.xlabel('Epochs')
     plt.ylabel('Accuracy')
     plt.legend()
-    plt.savefig(f'./plots/{title}_train_vs_val_acc.png')
+    plt.savefig(f'./{path_to_plot}/{title}_train_vs_val_acc.png')
 
     return fig_1, fig_2
 
@@ -142,27 +164,26 @@ def plot_scores(score_a, score_b, path):
     plt.savefig(f'{path}/Score_acc_plot.png')
 
 
-def plot_prediction(preds, labels, path):
+def plot_prediction(graph_data, path):
     fig = plt.figure()
-
-    graph_data = pd.DataFrame(columns=["book", "label", "count"])
-    for k, v in preds.items():
-        for i in range(2):
-            counts = len(np.where(v == i)[0])
-            graph_data = graph_data.append({"book": k, "label": labels[i], "count": counts}, ignore_index=True)
-
-    mean_series = [graph_data[graph_data['label'] == labels[i]]['count'].mean() for i in range(2)]
-    threshold = max(mean_series) * 0.05
-
     fig.set_facecolor('white')
-    graph = sns.barplot(x="book", y="count", alpha=0.8, hue="label", data=graph_data)
-    graph.axhline(threshold)
+    sns.barplot(x="book", y="count", alpha=0.8, hue="label", data=graph_data)
     plt.title("Chunks Distribution")
     plt.ylabel('Chunk', fontsize=12)
     plt.xlabel('Author', fontsize=12)
     plt.xticks(rotation=90)
-    plt.savefig(f"{path}/preds_distribution.png")
+    plt.savefig(path)
     return fig
+
+
+def build_graph_data(X, y):
+    graph_data = pd.DataFrame(columns=["book", "label", "count"])
+    for k, v in X.items():
+        for i in range(2):
+            counts = len(np.where(v == i)[0])
+            graph_data = graph_data.append({"book": k, "label": y[i], "count": counts}, ignore_index=True)
+
+    return graph_data
 
 
 def load_embeddings(creation, elmo, book=None):

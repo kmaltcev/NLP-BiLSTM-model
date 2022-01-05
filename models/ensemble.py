@@ -1,5 +1,6 @@
 import numpy as np
-from keras.wrappers.scikit_learn import KerasClassifier
+from keras.optimizer_v2.adam import Adam
+from scikeras.wrappers import KerasClassifier
 from mlxtend.classifier import EnsembleVoteClassifier
 
 from utils.utils import plot_eval
@@ -15,20 +16,21 @@ class Ensemble:
         self.Y = train_set.Y_train[:, 1]
         self.clfs = []
 
-    def add(self, model):
-        clf = KerasClassifier(build_fn=model.build, epochs=model.epochs, batch_size=model.batch_size)
+    def add(self, model, path):
+        optimizer = Adam(learning_rate=0.0001)
+        clf = KerasClassifier(model=model.build(), epochs=model.epochs, batch_size=model.batch_size,
+                              validation_split=.2, warm_start=True, optimizer=optimizer)
         clf._estimator_type = "classifier"
         history = clf.fit(self.X, self.train_set.Y_train)
         self.clfs.append(clf)
-        return plot_eval(history.history, len(history.epoch), model.name)
+        return plot_eval(history.history_, history.epochs, model.name, path)
 
     def build(self):
         self.model = EnsembleVoteClassifier(clfs=self.clfs, voting='soft', fit_base_estimators=False)
 
     def fit(self):
-        self.model.fit(self.X, self.Y)
-        # history = self.model.fit(self.X, self.Y)
-        # return history
+        history = self.model.fit(self.X, self.Y)
+        return history
 
     def predict_proba(self, X=None):
         if X is None:

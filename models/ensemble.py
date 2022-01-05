@@ -17,9 +17,9 @@ class Ensemble:
         self.clfs = []
 
     def add(self, model, path):
-        optimizer = Adam(learning_rate=0.0001)
-        clf = KerasClassifier(model=model.build(), epochs=model.epochs, batch_size=model.batch_size,
-                              validation_split=.2, warm_start=True, optimizer=optimizer)
+        optimizer = Adam(learning_rate=model.learning_rate)
+        clf = KerasClassifier(model=model.build(), epochs=model.epochs, batch_size=model.batch_size, warm_start=True,
+                              validation_split=.2, optimizer=optimizer, validation_batch_size=model.batch_size)
         clf._estimator_type = "classifier"
         history = clf.fit(self.X, self.train_set.Y_train)
         self.clfs.append(clf)

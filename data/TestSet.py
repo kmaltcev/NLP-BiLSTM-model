@@ -1,31 +1,26 @@
 import os
-import re
 
 import pandas as pd
 from tqdm import tqdm
 from stqdm import stqdm
 from string import punctuation
 from nltk.corpus import stopwords
-from utils.utils import read_books, load_embeddings, lemmatize
+
+from data.absDataset import AbsDataset, pre_clean, not_stopword
+from utils.utils import load_embeddings, lemmatize
 from joblib import Parallel, delayed
 
 
-class TestSet:
+class TestSet(AbsDataset):
     data, embeddings = None, None
 
-    def __init__(self, name: str):
-        if name is None:
-            raise ValueError("No data provided")
-        books = read_books([name])
-        self.data = pd.DataFrame(columns=["author", "book", "text"])
-        for k in books:
-            for book in books[k]:
-                self.data = self.data.append({"author": name,
+    def __init__(self, names: str):
+        super().__init__(names, columns=["author", "book", "text"])
+        for k in self.books:
+            for book in self.books[k]:
+                self.data = self.data.append({"author": names,
                                               "book": list(book.keys())[0],
                                               "text": list(book.values())[0]}, ignore_index=True)
-
-    def __str__(self):
-        return str(self.data)
 
     def preprocess(self):
         preprocessed_data = pd.DataFrame(columns=self.data.columns)
@@ -34,16 +29,11 @@ class TestSet:
             if f"{data_row['author']}" not in os.listdir("./prep_data_cached/"):
                 os.mkdir(f"./prep_data_cached/{data_row['author']}/")
             if data_row['book'] not in os.listdir(f"./prep_data_cached/{data_row['author']}/"):
-                text = re.sub(r'[^ЁёА-я\s]', ' ', data_row['text'])
-                text = ' '.join([w for w in text.split() if len(w) > 1])
-                text = re.sub(r' {2,}', ' ', text)
-                text = text.lower().split(' ')
+                text = pre_clean(data_row)
                 tokens = []
                 for i in stqdm(range(len(text)),
                                desc=f"Cleaning and stemming {data_row['author']}'s {data_row['book']}"):
-                    if text[i] not in stopwords.words('russian') \
-                            and text[i] != " " \
-                            and text[i].strip() not in punctuation:
+                    if not_stopword(text[i]):
                         tokens.append(text[i])
                 text = Parallel(n_jobs=-1)(delayed(lemmatize)(tokens[i: i + 100000])
                                            for i in tqdm(range(0, len(tokens), 100000),
@@ -77,5 +67,5 @@ class TestSet:
                                              'book': self.data['book'].values[idx],
                                              'text': [self.data['text'].values[idx]],
                                              'embeddings': [work]})
-                               for idx, work in enumerate(stqdm(list_embeddings, desc="Building embeddings df"))])
+                               for idx, work in enumerate(tqdm(list_embeddings, desc="Building embeddings df"))])
         return self.data['embeddings'].shape

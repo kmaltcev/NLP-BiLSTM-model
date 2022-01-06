@@ -1,15 +1,15 @@
 from matplotlib import pyplot as plt
 
-from data.Dataset import Dataset
+from data.RawDataset import RawDataset
 from data.TrainSet import TrainSet
-from models.merge import ELMo, CNN, BiLSTM, Ensemble
+from models.Models import ELMo, CNN, BiLSTM, Ensemble
 from utils.utils import plot_words_cloud, plot_words_bar, plot_compare_bars
 
 names = ["Furman", "Garshin"]
 name_C = "Sholokhov"
 
 if __name__ == '__main__':
-    dataset = Dataset(names)
+    dataset = RawDataset(names)
     dataset.preprocess()
     plot_words_cloud(dataset.data)
     plot_words_bar(dataset.data)

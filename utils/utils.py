@@ -1,38 +1,32 @@
 import os
-from collections import Counter
 
 import numpy as np
 import pandas as pd
 import seaborn as sns
+from dtaidistance import dtw_ndim
 from pymystem3 import Mystem
 
 from utils.constants import BOOKS_DIR, EMBEDDINGS_DIR
-from wordcloud import WordCloud
-from nltk.corpus import stopwords
 from matplotlib import pyplot as plt
 from numpy import savez_compressed, load
 
 
-def build_graph_data_summary(dataframe, imp1, imp2, test_creation):
-    A = dataframe[dataframe['book'] != test_creation][dataframe['label'] == imp1]
-    Apd = pd.DataFrame({
-        "book": "Sum",
-        "label": A['label'].values[0],
-        "count": A['count'].sum()
-    }, index=[0])
-
-    B = dataframe[dataframe['book'] != test_creation][dataframe['label'] == imp2]
-    Bpd = pd.DataFrame({
-        "book": "Sum",
-        "label": B['label'].values[0],
-        "count": B['count'].sum()
-    }, index=[1])
-
-    Test = dataframe[dataframe['book'] == test_creation]
-    ratio = (Apd['count'].sum() + Bpd['count'].sum()) / Test['count'].sum()
-    Test.at[Test.index[0], 'count'] = Test['count'].values[0] * ratio
-    Test.at[Test.index[1], 'count'] = Test['count'].values[1] * ratio
-    return pd.concat([Apd, Bpd, Test])
+def build_graph_data_summary(dataframe, authors_pair, test_creation):
+    graph_data = []
+    for impostor in authors_pair:
+        A = dataframe[dataframe['book'] != test_creation][dataframe['label'] == impostor]
+        graph_data.append(pd.DataFrame({
+            "book": "Summary except test creation",
+            "label": A['label'].values[0],
+            "count": A['count'].sum()
+        }, index=[0]))
+    df = pd.concat(graph_data)
+    max_value = df[df['count'] == max(df['count'])]
+    graph_data.append(dataframe[dataframe['book'] == test_creation])
+    ratio = max_value['count'][0] / graph_data[2][graph_data[2]['label'] == max_value['label'][0]]['count'].values[0]
+    for i in range(2):
+        graph_data[2].at[graph_data[2].index[i], 'count'] = graph_data[2]['count'].values[i] * ratio
+    return pd.concat(graph_data)
 
 
 def read_books(names):
@@ -46,9 +40,8 @@ def read_books(names):
     return books
 
 
-def plot_eval(history, n_epochs, title, path_to_plot):
+def plot_eval(history, epochs, title, path_to_plot):
     cmap = circular(['g', 'b'])
-    epochs = range(1, n_epochs + 1)
 
     fig_1 = plt.figure()
     labels = (label for label in ['Training loss', 'Validation loss'])
@@ -75,64 +68,6 @@ def plot_eval(history, n_epochs, title, path_to_plot):
     plt.savefig(f'./{path_to_plot}/{title}_train_vs_val_acc.png')
 
     return fig_1, fig_2
-
-
-def plot_words_bar(dataset, path):
-    sns_palette = ["rocket", "mako", "magma", "rocket_r"]
-    sns.set_style("whitegrid")
-    figs = []
-    for i, book in dataset.iterrows():
-        words = book['text'].split()
-        length = len(words)
-        counters = Counter(words)
-        cnt_pro = np.asarray(counters.most_common(20))
-        probs = [int(num) / length for num in cnt_pro[:, 1]]
-
-        occ_df = pd.DataFrame({'word': cnt_pro[:, 0],
-                               'count': probs})
-        fig = plt.figure()
-        sns.barplot(x='word', y='count', alpha=0.8, data=occ_df, palette=sns_palette[i])
-        plt.title(f"{book['author']}'s frequent words")
-        plt.ylabel('Frequency', fontsize=12)
-        plt.xlabel(f'Word', fontsize=12)
-        plt.xticks(rotation=90)
-        figs.append(fig)
-        plt.savefig(f'{path}/words_bar_{book["author"]}.png')
-    return figs
-
-
-def plot_compare_bars(dataset, path):
-    words = []
-    names = []
-    fig = plt.figure()
-    fig.set_facecolor('white')
-    for i, book in dataset.iterrows():
-        words.append(len(book['text'].split()))
-        names.append(book['author'])
-
-    sns.barplot(names, words, alpha=0.8)
-    plt.title("Length of works")
-    plt.ylabel('Length of works', fontsize=12)
-    plt.xlabel('Author', fontsize=12)
-    plt.xticks(rotation=90)
-    plt.savefig(f'{path}/words_count.png')
-    return fig
-
-
-def plot_words_cloud(dataset, path):
-    for i, book in dataset.iterrows():
-        wordcloud = WordCloud(background_color="white",
-                              stopwords=stopwords.words('russian'),
-                              mode="RGBA",
-                              width=400,
-                              height=330,
-                              colormap='inferno').generate(book['text'])
-        fig = plt.figure()
-        plt.imshow(wordcloud, interpolation='bilinear')
-        plt.axis("off")
-        plt.show()
-        plt.savefig(f'{path}/wordcloud_{book["author"]}.png')
-        return fig
 
 
 def plot_scores(score_a, score_b, path):
@@ -168,6 +103,19 @@ def plot_prediction(graph_data, path):
     fig = plt.figure()
     fig.set_facecolor('white')
     sns.barplot(x="book", y="count", alpha=0.8, hue="label", data=graph_data)
+    plt.legend(bbox_to_anchor=(1.05, 1))
+    plt.title("Chunks Distribution")
+    plt.ylabel('Chunk', fontsize=12)
+    plt.xlabel('Author', fontsize=12)
+    plt.xticks(rotation=90)
+    plt.savefig(path)
+    return fig
+
+
+def plot_train_prediction(graph_data, path):
+    fig = plt.figure()
+    fig.set_facecolor('white')
+    sns.barplot(x=list(graph_data.keys()), y=list(graph_data.values()), alpha=0.8)
     plt.title("Chunks Distribution")
     plt.ylabel('Chunk', fontsize=12)
     plt.xlabel('Author', fontsize=12)
@@ -184,6 +132,14 @@ def build_graph_data(X, y):
             graph_data = graph_data.append({"book": k, "label": y[i], "count": counts}, ignore_index=True)
 
     return graph_data
+
+
+def count_distance(embeddings, distance_measure_cut=100):
+    series = []
+    for s in embeddings:
+        series.append(s[len(s) - distance_measure_cut: len(s)])
+    distance, path = dtw_ndim.warping_paths(series[0], series[1])
+    return distance / distance_measure_cut, path
 
 
 def load_embeddings(creation, elmo, book=None):

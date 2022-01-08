@@ -2,7 +2,7 @@ import numpy as np
 from keras.wrappers.scikit_learn import KerasClassifier
 from mlxtend.classifier import EnsembleVoteClassifier
 
-from utils.utils import plot_eval
+from utils.plots import plot_eval
 
 
 class Ensemble:

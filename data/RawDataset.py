@@ -3,8 +3,6 @@ import numpy as np
 import pandas as pd
 from tqdm import tqdm
 from stqdm import stqdm
-from string import punctuation
-from nltk.corpus import stopwords
 from joblib import Parallel, delayed
 
 from data.absDataset import AbsDataset, pre_clean, not_stopword

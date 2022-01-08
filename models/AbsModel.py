@@ -2,7 +2,7 @@ import numpy as np
 from keras import Model
 from keras.utils.vis_utils import plot_model
 from keras.optimizer_v2.adam import Adam
-from utils.utils import plot_eval
+from utils.plots import plot_eval
 
 
 class AbsModel:

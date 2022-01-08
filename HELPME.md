@@ -1,14 +1,10 @@
-# Plagiarism Detection Application
-## Description
+## User instructions
 The app is based on Streamlit engine and was designed for smooth operation and pleasant experience.
-
 Its purpose is to let researchers, that are interested in using the impostors’ method in the field of authorship
 analysis and plagiarism detection specifically, to put their assumption and suspicions under a test. With the system,
 researchers can analyze results and obtain performances of the method in solving the task. With the GUI, changing the
 parameters and visualizing the results was never easier. Researchers can use the system to obtain predictions and prove
 innocence of their loved authors.
-
-## User instructions
 As you access the main page, you will be able to experiment for the name of science, please follow the next steps to
 understand how to operate the system:
 

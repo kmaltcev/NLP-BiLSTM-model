@@ -8,7 +8,7 @@ second_impostor_label = "Second Impostors"
 counting_distance_label = "Counting distance..."
 embedding_progress_label = "Embedding in progress..."
 preprocess_progress_label = "Preprocessing in progress..."
-main_page_title = "# Plagiarism detection using Impostors Method"
+main_page_title = "# Plagiarism Detection Using Impostors Method"
 prediction_by_creation_desc = "Predictions distribution by every creation"
 summarized_pred_desc = "Predictions are summarized except creation under test. " \
                        "Creation under test is scaled up for easier analysis"

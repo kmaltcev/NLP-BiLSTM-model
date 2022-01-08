@@ -15,6 +15,8 @@ summarized_pred_desc = "Predictions are summarized except creation under test. "
 validation_barplot_desc = "Validation plot, training set is used for predictions. " \
                           "Therefore, distribution must be close to equal. If it's not, something is wrong"
 length_err = "Impostors are not the same length. Please provide the same number of authors for each impostor"
+lr_desc = "Learning rate controls how much to change the model in response to the estimated error each time the model " \
+          "weights are updated."
 empty_impostors_err = "Impostors are empty"
 
 

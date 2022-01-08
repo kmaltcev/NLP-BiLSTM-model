@@ -19,6 +19,7 @@ class Ensemble:
         clf = KerasClassifier(build_fn=model.build, batch_size=model.batch_size,
                               validation_split=.2, epochs=model.epochs)
         clf._estimator_type = "classifier"
+
         history = clf.fit(self.X, self.train_set.Y_train)
         self.clfs.append(clf)
         return plot_eval(history.history, history.epoch, model.name, path)

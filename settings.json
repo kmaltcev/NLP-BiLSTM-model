@@ -17,7 +17,8 @@
         "max_value": 1000,
         "value": 200,
         "step": 1,
-        "format": "%d"
+        "format": "%d",
+        "help": "Amount of filters used by CNN"
       },
       "dropout_rate": {
         "label": "Dropout rate",
@@ -25,7 +26,8 @@
         "max_value": 1.0,
         "value": 0.5,
         "step": 0.1,
-        "format": "%.2f"
+        "format": "%.2f",
+        "help": "The default interpretation of the dropout hyperparameter is the probability of training a given node in a layer, where 1.0 means no dropout, and 0.0 means no outputs from the layer.\n\nA good value for dropout in a hidden layer is between 0.5 and 0.8. Input layers use a larger dropout rate, such as of 0.8."
       },
       "epochs": {
         "label": "Number of epochs",
@@ -33,7 +35,8 @@
         "max_value": 100,
         "value": 10,
         "step": 1,
-        "format": "%d"
+        "format": "%d",
+        "help": "Defines the number times that the learning algorithm will work through the entire training dataset."
       },
       "fc_layer_size": {
         "label": "Dense layer size",
@@ -41,7 +44,8 @@
         "max_value": 100,
         "value": 30,
         "step": 1,
-        "format": "%d"
+        "format": "%d",
+        "help": "Size of the Fully Connected layer"
       },
       "batch_size": {
         "label": "Batch size",
@@ -49,7 +53,8 @@
         "max_value": 100,
         "value": 50,
         "step": 1,
-        "format": "%d"
+        "format": "%d",
+        "help": "Defines the number of samples to work through before updating the internal model parameters."
       },
       "kernel_size_1": {
         "label": "Size of filter 1",
@@ -57,7 +62,8 @@
         "max_value": 10,
         "value": 3,
         "step": 1,
-        "format": "%d"
+        "format": "%d",
+        "help": "Width * Height of the filter mask for the First Convolutional Network"
       },
       "kernel_size_2": {
         "label": "Size of filter 2",
@@ -65,7 +71,8 @@
         "max_value": 10,
         "value": 4,
         "step": 1,
-        "format": "%d"
+        "format": "%d",
+        "help": "Width * Height of the filter mask for the Second Convolutional Network"
       },
       "kernel_size_3": {
         "label": "Size of filter 3",
@@ -73,7 +80,8 @@
         "max_value": 10,
         "value": 5,
         "step": 1,
-        "format": "%d"
+        "format": "%d",
+        "help": "Width * Height of the filter mask for the Third Convolutional Network"
       }
     },
     "BiLSTM": {
@@ -83,7 +91,8 @@
         "max_value": 500,
         "value": 200,
         "step": 1,
-        "format": "%d"
+        "format": "%d",
+        "help": "Hidden state dimension is number of features of the hidden state. If you increase hidden size then you compute bigger feature as hidden state output."
       },
       "dropout_rate": {
         "label": "Dropout rate",
@@ -91,31 +100,35 @@
         "max_value": 1.0,
         "value": 0.5,
         "step": 0.1,
-        "format": "%.2f"
+        "format": "%.2f",
+        "help": "Fraction of the input units to drop."
       },
       "epochs": {
         "label": "Number of epochs",
         "min_value": 1,
-        "max_value": 100,
+        "max_value": 1000,
         "value": 10,
         "step": 1,
-        "format": "%d"
+        "format": "%d",
+        "help": "Defines the number times that the learning algorithm will work through the entire training dataset."
       },
       "fc_layer_size": {
         "label": "Dense layer size",
         "min_value": 10,
-        "max_value": 100,
+        "max_value": 100000,
         "value": 30,
         "step": 1,
-        "format": "%d"
+        "format": "%d",
+        "help": "Size of the Fully Connected layer"
       },
       "batch_size": {
         "label": "Batch size",
         "min_value": 1,
-        "max_value": 100,
+        "max_value": 100000,
         "value": 50,
         "step": 1,
-        "format": "%d"
+        "format": "%d",
+        "help": "Defines the number of samples to work through before updating the internal model parameters."
       }
     }
   }

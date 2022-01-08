@@ -1,9 +1,15 @@
 ## User instructions
+
 Here for the first time? Read along!
-This application is a platform for experimenting with the impostors’ method in the field of authorship analysis and plagiarism detection.
-The system implements the "Impostors Method" algorithm, which is highly known in the field of Natural Language Processing.
-As a part of the algorithm, convulutional neural networks and BiDirectional LSTM is utilized for learning and classifying texts' authors.
-Here, you can run your experiments and obtain detailed, visual results and performance reports.
+
+This platform is for experimenting with the impostors’ method in the field of authorship analysis and plagiarism
+detection.<br>
+The system implements the "Impostors Method" algorithm, which is highly known in the field of Natural Language
+Processing.<br>
+As a part of the algorithm, CNN, BiLSTM and Ensemble model using Soft Voting algorithm are utilized for learning and
+classifying texts' to authors.<br>
+Here, you can run your experiments and obtain detailed, visual results and performance reports.<br>
+
 As you access the main page, you will be able to experiment for the name of science, please follow the next steps to
 understand how to operate the system:
 

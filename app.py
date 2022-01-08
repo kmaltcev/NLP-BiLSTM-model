@@ -3,6 +3,7 @@ import os
 import streamlit as st
 import tensorflow as tf
 
+from scipy.stats import ttest_ind
 from data.DataTypes import TestSet, TrainSet, RawDataset
 from models.Models import ELMo, CNN, BiLSTM, Ensemble
 from utils import strings as R
@@ -18,7 +19,7 @@ def show_hide_help_button_onclick():
 def preprocess(dataset):
     with st.spinner(text=R.preprocess_progress_label):
         dataset.preprocess()
-    dataset.chunking()
+    dataset.chunking(chunk_size=200)
     with st.spinner(text=R.embedding_progress_label):
         dataset.create_embedding(ELMo)
 
@@ -37,10 +38,10 @@ st.markdown(R.main_page_title)
 
 show_hide_help_button = st.sidebar.button("Show/Hide instructions", on_click=show_hide_help_button_onclick)
 if 'show_help' not in st.session_state:
-    st.session_state['show_help'] = True
+    st.session_state['show_help'] = False
 if st.session_state['show_help']:
     with open("HELPME.md", "r") as fp:
-        st.markdown(fp.read())
+        st.markdown(fp.read(), unsafe_allow_html=True)
 
 # Initiate default configs for tensorflow outputs
 tf.compat.v1.experimental.output_all_intermediates(True)
@@ -81,12 +82,12 @@ if base_dir:
             parameters[category] = dict()
             f'{category}'
             parameters[category]['lr'] = float(
-                st.text_input(label='Learning rate', value=0.0001, key=i, max_chars=6, help="Learning rate "))
+                st.text_input(label='Learning rate', value=0.0001, key=i, max_chars=6, help=R.lr_desc))
             for j, (label, config) in enumerate(category_param_list.items()):
                 parameters[category][label] = st.number_input(config['label'], config['min_value'],
                                                               config['max_value'], config['value'],
                                                               config['step'], key=(i + j + 3),
-                                                              format=config['format'])
+                                                              format=config['format'], help=config['help'])
     # begin training
     if start_training:
         if len(first_impostor) == 0 or len(second_impostor) == 0:
@@ -154,12 +155,11 @@ if base_dir:
                     predictions = plot_prediction(graph_data_summary, R.plot_summary_path(constants.path_to_plot))
                     plot_by_cols(R.summarized_pred_desc, predictions)
                     # Count P-value
-                    from scipy.stats import ttest_ind
-
-                    s1 = graph_data[graph_data['book'] != creation_under_test]['count'].values
-                    s2 = graph_data[graph_data['book'] == creation_under_test]['count'].values
+                    s1 = graph_data_summary[graph_data_summary['label'] == impostor1]['count'].values
+                    s2 = graph_data_summary[graph_data_summary['label'] == impostor2]['count'].values
                     statistic, pvalue = ttest_ind(s1, s2)
-                    # predictions = plot_prediction(graph_data_summary, R.plot_summary_path(constants.path_to_plot))
-                    # plot_by_cols(R.summarized_pred_desc, predictions)
+                    prediction = "Original copy" if pvalue*100 < 5 else "-Suspicion"
+                    with next(col):
+                        st.metric("P-value", f"{pvalue*100:.4f}%", prediction)
                     print("end")
                     del cols

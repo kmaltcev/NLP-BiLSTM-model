@@ -61,7 +61,6 @@ def plot_eval(history, epochs, title, path_to_plot):
     plt.ylabel('Accuracy')
     plt.legend()
     plt.savefig(f'./{path_to_plot}/{title}_train_vs_val_acc.png')
-
     return fig_1, fig_2
 
 
@@ -69,26 +68,20 @@ def plot_scores(score_a, score_b, path):
     data = {'abbrev': ['CNN', 'BiLSTM'],
             'score': [score_a[0], score_b[0]],
             'accuracy': [score_a[1], score_b[1]]}
-
     sns.set_theme(style="whitegrid")
     f, ax = plt.subplots()
-
     sns.set_color_codes("pastel")
     sns.barplot(x="accuracy", y="abbrev", data=data,
                 label="Accuracy", color="b")
-
     sns.set_color_codes("muted")
     sns.barplot(x="score", y="abbrev", data=data,
                 label="Score", color="b")
-
     ax.legend(bbox_to_anchor=(1, 1), ncol=1, loc='lower right', frameon=True)
     ax.set(ylabel="NN Type",
            xlabel="Score/Accuracy Value")
-
     for i in range(len(data['abbrev'])):
         plt.annotate(f"{data['score'][i]:.2f}", xy=(data['score'][i], i))
         plt.annotate(f"{data['accuracy'][i]:.2f}", xy=(data['accuracy'][i], i))
-
     plt.title(f"Score and Accuracy")
     plt.show()
     plt.savefig(f'{path}/Score_acc_plot.png')

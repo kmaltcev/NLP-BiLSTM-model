@@ -11,6 +11,10 @@ from utils.plots import plot_prediction, plot_train_prediction, build_graph_data
 from utils.utils import convert_embeddings_to_tensor, circular_generator, build_graph_data, count_distance
 
 
+def show_hide_help_button_onclick():
+    st.session_state['show_help'] = not st.session_state['show_help']
+
+
 def preprocess(dataset):
     with st.spinner(text=R.preprocess_progress_label):
         dataset.preprocess()
@@ -31,18 +35,12 @@ def plot_by_cols(desc, *args):
 st.set_page_config(page_title=R.page_title, initial_sidebar_state="expanded", layout="wide")
 st.markdown(R.main_page_title)
 
-
-def show_hide_help_button_onclick():
-    st.session_state['show_help'] = not st.session_state['show_help']
-
-
 show_hide_help_button = st.sidebar.button("Show/Hide instructions", on_click=show_hide_help_button_onclick)
 if 'show_help' not in st.session_state:
     st.session_state['show_help'] = True
 if st.session_state['show_help']:
-    with open("README.md", "r") as fp:
-        string = fp.read()
-        st.markdown(string[string.find("User")-3:])
+    with open("HELPME.md", "r") as fp:
+        st.markdown(fp.read())
 
 # Initiate default configs for tensorflow outputs
 tf.compat.v1.experimental.output_all_intermediates(True)

@@ -1,10 +1,9 @@
 ## User instructions
-The app is based on Streamlit engine and was designed for smooth operation and pleasant experience.
-Its purpose is to let researchers, that are interested in using the impostors’ method in the field of authorship
-analysis and plagiarism detection specifically, to put their assumption and suspicions under a test. With the system,
-researchers can analyze results and obtain performances of the method in solving the task. With the GUI, changing the
-parameters and visualizing the results was never easier. Researchers can use the system to obtain predictions and prove
-innocence of their loved authors.
+Here for the first time? Read along!
+This application is a platform for experimenting with the impostors’ method in the field of authorship analysis and plagiarism detection.
+The system implements the "Impostors Method" algorithm, which is highly known in the field of Natural Language Processing.
+As a part of the algorithm, convulutional neural networks and BiDirectional LSTM is utilized for learning and classifying texts' authors.
+Here, you can run your experiments and obtain detailed, visual results and performance reports.
 As you access the main page, you will be able to experiment for the name of science, please follow the next steps to
 understand how to operate the system:
 

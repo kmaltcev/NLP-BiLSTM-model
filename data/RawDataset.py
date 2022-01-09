@@ -21,6 +21,9 @@ class RawDataset(AbsDataset):
                                           "text": text,
                                           "length": len(text)}, ignore_index=True)
 
+    def __getitem__(self, item):
+        return [np.concatenate(self.data[self.data['label'] == i][item].values) for i in range(self.labels_size)]
+
     def preprocess(self):
         preprocessed_data = pd.DataFrame(columns=self.data.columns)
         for index, data_row in self.data.iterrows():

@@ -21,8 +21,8 @@ setup(
     python_requires='==3.9',
     install_requires=required
 )
-conda.cli.main('conda', 'install',  '-y', 'cudatoolkit')
-conda.cli.main('conda', 'install',  '-y', 'cudnn')
+conda.cli.main('conda', 'install', '-y', 'cudatoolkit')
+conda.cli.main('conda', 'install', '-y', 'cudnn')
 nltk.download('stopwords')
 
 if not os.path.exists("plots"):
@@ -39,3 +39,7 @@ if not os.path.exists("elmo"):
         z = zipfile.ZipFile(io.BytesIO(r.content))
         z.extractall("./elmo/")
         print("ELMo is ready!")
+
+'''
+
+'''

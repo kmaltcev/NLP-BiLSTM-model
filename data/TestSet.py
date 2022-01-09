@@ -1,5 +1,6 @@
 import os
 
+import numpy as np
 import pandas as pd
 from tqdm import tqdm
 from stqdm import stqdm
@@ -21,6 +22,9 @@ class TestSet(AbsDataset):
                 self.data = self.data.append({"author": names,
                                               "book": list(book.keys())[0],
                                               "text": list(book.values())[0]}, ignore_index=True)
+
+    def __getitem__(self, item):
+        return np.concatenate(self.data[item].values).reshape(-1)
 
     def preprocess(self):
         preprocessed_data = pd.DataFrame(columns=self.data.columns)

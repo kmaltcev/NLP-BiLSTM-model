@@ -8,7 +8,7 @@ from models.Models import ELMo, CNN, BiLSTM, Ensemble
 from utils import strings as R
 from utils.constants import Constants, BOOKS_DIR
 from utils.plots import plot_prediction, plot_train_prediction, build_graph_data_summary, build_graph_data_test
-from utils.utils import convert_embeddings_to_tensor, circular_generator, build_graph_data, count_distance
+from utils.utils import convert_embeddings_to_tensor, circular_generator, build_graph_data, compute_distance
 
 os.environ['TF_GPU_ALLOCATOR'] = 'cuda_malloc_async'
 
@@ -33,6 +33,19 @@ def plot_by_cols(desc, *args):
                 st.caption(desc)
 
 
+def distances_check(dist):
+    for k in range(len(dist)):
+        prev = dist[k - 1]
+        curr = dist[k]
+        if curr['distance'] == 0:
+            st.metric(label=f"Distance between {curr['a']} and {curr['b']}",
+                      value=f"{curr['distance']:.2f}")
+        else:
+            st.metric(label=f"Distance between {curr['a']} and {curr['b']}",
+                      value=f"{curr['distance']:.2f}",
+                      delta=f"{curr['distance'] - prev['distance']}")
+
+
 # Set streamlit configuration
 st.set_page_config(page_title=R.page_title, initial_sidebar_state="expanded", layout="wide")
 st.markdown(R.main_page_title)
@@ -53,18 +66,6 @@ with open('settings.json') as f:
 
 # Base data directory path
 base_dir = st.sidebar.text_input(R.path_to_data_label, value=f"./{BOOKS_DIR}")
-
-
-def distance_check(distance):
-    if distance == 0:
-        st.error(R.same_books_err(distance))
-    elif 0 < distance < 190:
-        st.warning(R.similar_books_err(distance))
-    elif 190 <= distance < 400:
-        st.success(R.good_books_success(distance))
-    else:
-        st.warning(R.diff_books_warning(distance))
-
 
 if base_dir:
     all_data = os.listdir(base_dir)
@@ -105,6 +106,7 @@ if base_dir:
                 preprocess(test_set)
                 # Loops over impostors pairs
                 for idx, (impostor1, impostor2) in enumerate(zip(first_impostor, second_impostor)):
+
                     # Initialize constants
                     constants = Constants(author_under_test, creation_under_test, impostor1, impostor2)
                     # Check if pairs is the same
@@ -112,11 +114,9 @@ if base_dir:
                         st.warning(R.same_impostors_err(impostor1))
 
                     st.markdown(R.experiment_title(idx, impostor1, impostor2))
-                    authors_pair = [impostor1, impostor2]
-                    raw_train_set = RawDataset(authors_pair)
+                    impostors_pair = [impostor1, impostor2]
+                    raw_train_set = RawDataset(impostors_pair)
                     preprocess(raw_train_set)
-                    with st.spinner(text=R.counting_distance_label):
-                        distance_check(count_distance(raw_train_set))
 
                     cols = st.columns([1, 1, 1, 1])
                     col = circular_generator(cols)
@@ -137,7 +137,7 @@ if base_dir:
                     # Validate predictions of train set
                     Y = cnn_bilstm.predict()
                     preds = dict()
-                    for i, impostor in enumerate(authors_pair):
+                    for i, impostor in enumerate(impostors_pair):
                         preds[impostor] = Y[Y == i].shape[0]
                     # Plot validation bar plot
                     predictions = plot_train_prediction(preds, R.plot_train_path(constants.path_to_plot))
@@ -148,15 +148,25 @@ if base_dir:
                         X = convert_embeddings_to_tensor(row['embeddings'])
                         preds[row['book']] = cnn_bilstm.predict(X)
                     # Plot predictions by creation
-                    graph_data = build_graph_data(preds, authors_pair)
+                    graph_data = build_graph_data(preds, impostors_pair)
                     predictions = plot_prediction(graph_data, R.plot_by_book_preds_path(constants.path_to_plot))
                     plot_by_cols(R.prediction_by_creation_desc, predictions)
                     # Plot sum of predictions vs. scaled prediction of creation under test
-                    graph_data_summary = build_graph_data_summary(graph_data, authors_pair, creation_under_test)
+                    graph_data_summary = build_graph_data_summary(graph_data, impostors_pair, creation_under_test)
                     predictions = plot_prediction(graph_data_summary, R.plot_summary_path(constants.path_to_plot))
                     plot_by_cols(R.summarized_pred_desc, predictions)
                     # Count P-value
-                    s1, s2 = build_graph_data_test(graph_data, authors_pair, creation_under_test)
+                    s1, s2 = build_graph_data_test(graph_data, impostors_pair, creation_under_test)
                     statistic, pvalue = ttest_ind(s1, s2)
                     with next(col):
-                        st.metric("P-value", f"{pvalue * 100:.4f}%", R.metric_result(pvalue * 100))
+                        delta, delta_color = R.metric_result(pvalue * 100)
+                        st.metric(label="P-value",
+                                  value=f"{pvalue * 100:.4f}%",
+                                  delta=delta, delta_color=delta_color)
+                        texts = raw_train_set['text']
+                        distances = []
+                        with st.spinner(text=R.computing_distance_label(impostors_pair)):
+                            distances.append({"a": impostor1,
+                                              "b": impostor2,
+                                              "distance": compute_distance(texts)})
+                        distances_check(distances)

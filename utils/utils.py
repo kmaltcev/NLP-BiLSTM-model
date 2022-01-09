@@ -1,5 +1,5 @@
 import os
-
+import math
 import numpy as np
 import pandas as pd
 from dtaidistance import dtw
@@ -30,11 +30,9 @@ def build_graph_data(X, y):
     return graph_data
 
 
-def count_distance(dataset):
-    texts = [" ".join([" ".join(row) for row in dataset.data[dataset.data['label'] == i]['text']]).split() for i in
-             range(2)]
+def compute_distance(texts):
     ascii_texts = [stats.zscore([np.average([ord(ch) for ch in word]) for word in text]) for text in texts]
-    distance = dtw.distance(ascii_texts[0], ascii_texts[1], window=25)
+    distance = dtw.distance(ascii_texts[0], ascii_texts[1], window=25, max_dist=500, use_c=True)
     return distance
 
 

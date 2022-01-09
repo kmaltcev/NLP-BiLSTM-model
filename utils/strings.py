@@ -5,7 +5,7 @@ author_under_test = "Author under test"
 select_box_label = "Creation under test"
 first_impostor_label = "First Impostors"
 second_impostor_label = "Second Impostors"
-counting_distance_label = "Counting distance..."
+
 embedding_progress_label = "Embedding in progress..."
 preprocess_progress_label = "Preprocessing in progress..."
 main_page_title = "# Plagiarism Detection Using Impostors Method"
@@ -34,16 +34,16 @@ def test_set_title(author, creation): return f"## Test set: {author}, {creation}
 def training_title(nn_name): return f"{nn_name} Training in progress..."
 
 
-def same_books_err(x): return f"These books looks are the same. The distance is: {x}"
+def same_books_err(x): return f"These books looks are the same. The distance is: {x:.2f}"
 
 
-def similar_books_err(x): return f"These books looks way too similar. The distance is: {x}"
+def similar_books_err(x): return f"These books looks way too similar. The distance is: {x:.2f}"
 
 
-def good_books_success(x): return f"Good choice for impostors! The distance is: {x}"
+def good_books_success(x): return f"Good choice for impostors! The distance is: {x:.2f}"
 
 
-def diff_books_warning(x): return f"These books looks far too different. The distance is: {x}"
+def diff_books_warning(x): return f"These books looks far too different. The distance is: {x:.2f}"
 
 
 def plot_train_path(path): return f"{path}/preds_train_set_distribution.png"
@@ -58,4 +58,10 @@ def plot_summary_path(path): return f"{path}/preds_summary_distribution.png"
 def experiment_title(idx, imp1, imp2): return f"### {idx + 1}. {imp1} vs. {imp2}"
 
 
-def metric_result(pvalue): return "Original copy" if pvalue < 5 else "-Suspicious"
+def metric_result(pvalue):
+    delta = "Original copy" if pvalue < 5 else "Suspicious"
+    delta_color = "normal" if delta == "Original copy" else "inverse"
+    return delta, delta_color
+
+
+def computing_distance_label(names): return f"Computing distance for {names}"

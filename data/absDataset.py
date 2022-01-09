@@ -1,11 +1,8 @@
 import re
-from string import punctuation
-
 import pandas as pd
+from string import punctuation
 from typing import Union
-
 from nltk.corpus import stopwords
-
 from utils.utils import read_books
 
 
@@ -27,6 +24,7 @@ class AbsDataset:
         if names is None:
             raise ValueError("No data provided")
         self.books = read_books(names if type(names) is list else [names])
+        self.labels_size = len(names) if type(names) is list else 1
         self.data = pd.DataFrame(columns=columns)
 
     def __str__(self):

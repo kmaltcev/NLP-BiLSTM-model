@@ -176,6 +176,7 @@ if base_dir:
                                   delta=delta, delta_color=delta_color)
                         texts = raw_train_set['text']
                         distances = []
+                        # distance calculating between impostors
                         with st.spinner(text=R.computing_distance_label(impostors_pair)):
                             distances.append({"a": impostor1,
                                               "b": impostor2,

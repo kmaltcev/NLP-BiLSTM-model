@@ -59,8 +59,8 @@ def experiment_title(idx, imp1, imp2): return f"### {idx + 1}. {imp1} vs. {imp2}
 
 
 def metric_result(pvalue):
-    delta = "Original copy" if pvalue < 5 else "Suspicious"
-    delta_color = "normal" if delta == "Original copy" else "inverse"
+    delta = "Null hypothesis accepted" if pvalue < 5 else "Null hypothesis rejected"
+    delta_color = "normal" if delta == "Null hypothesis accepted" else "inverse"
     return delta, delta_color
 
 

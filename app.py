@@ -24,7 +24,7 @@ def preprocess(dataset):
         dataset.preprocess()
     dataset.chunking(chunk_size=200)
     with st.spinner(text=R.embedding_progress_label):
-        dataset.create_embedding(ELMo)
+        dataset.create_embeddings(ELMo)
 
 
 # Plotting by columns, args must be the arrow of plots

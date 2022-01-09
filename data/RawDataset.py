@@ -60,7 +60,7 @@ class RawDataset(AbsDataset):
             chunked = chunked.append(temp_df)
         self.data = chunked
 
-    def create_embedding(self, elmo):
+    def create_embeddings(self, elmo):
         # Calling ELMo for each dataset in order to receive embeddings
         self.embeddings = [load_embeddings(data_row, elmo) for index, data_row in
                            tqdm(self.data.iterrows(), total=self.data.shape[0],

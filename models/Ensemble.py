@@ -25,8 +25,8 @@ class Ensemble:
         return plot_eval(history.history, history.epoch, model.name, path)
 
     def build(self):
-        self.model = EnsembleVoteClassifier(clfs=self.clfs, voting='soft', fit_base_estimators=False, use_clones=False,
-                                            verbose=1)
+        self.model = EnsembleVoteClassifier(clfs=self.clfs, voting='soft', verbose=1,
+                                            fit_base_estimators=False, use_clones=False)
 
     def fit(self):
         history = self.model.fit(self.X, self.Y)

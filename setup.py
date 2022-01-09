@@ -1,9 +1,8 @@
 import os
 import io
-import nltk
+
 import zipfile
-import requests
-import conda.cli
+
 from setuptools import setup, find_packages
 
 with open('requirements.txt') as f:
@@ -21,8 +20,14 @@ setup(
     python_requires='==3.9',
     install_requires=required
 )
+
+import conda.cli
+
 conda.cli.main('conda', 'install', '-y', 'cudatoolkit')
 conda.cli.main('conda', 'install', '-y', 'cudnn')
+
+import nltk
+
 nltk.download('stopwords')
 
 if not os.path.exists("plots"):
@@ -34,12 +39,10 @@ if not os.path.exists("prep_data_cached"):
 if not os.path.exists("elmo"):
     os.mkdir("elmo")
     if "model.hdf5" not in os.listdir("./elmo"):
+        import requests
+
         print("Downloading ELMo (araneum_lemmas_elmo_2048_2020) 1.5 GB...")
         r = requests.get("http://vectors.nlpl.eu/repository/20/212.zip")
         z = zipfile.ZipFile(io.BytesIO(r.content))
         z.extractall("./elmo/")
         print("ELMo is ready!")
-
-'''
-
-'''

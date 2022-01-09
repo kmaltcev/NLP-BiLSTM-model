@@ -45,7 +45,7 @@ def load_embeddings(creation, elmo, book=None):
         data = load(f"{EMBEDDINGS_DIR}/{creation['author']}/{search_q}_embeddings.npz")
         data = data['arr_0']
     else:
-        data = elmo().get_elmo_vectors(creation['text'])
+        data = elmo.get_elmo_vectors(creation['text'])
         savez_compressed(f"{EMBEDDINGS_DIR}/{creation['author']}/{search_q}_embeddings", data)
     return data
 

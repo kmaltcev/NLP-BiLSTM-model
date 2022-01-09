@@ -10,10 +10,8 @@ embedding_progress_label = "Embedding in progress..."
 preprocess_progress_label = "Preprocessing in progress..."
 main_page_title = "# Plagiarism Detection Using Impostors Method"
 prediction_by_creation_desc = "Predictions distribution by every creation"
-summarized_pred_desc = "Predictions are summarized except creation under test. " \
-                       "Creation under test is scaled up for easier analysis"
-validation_barplot_desc = "Validation plot, training set is used for predictions. " \
-                          "Therefore, distribution must be close to equal. If it's not, something is wrong"
+summarized_pred_desc = "Non-creation under test predictions are summed. Creation under test is scaled"
+validation_barplot_desc = "Validation plot."
 length_err = "Impostors are not the same length. Please provide the same number of authors for each impostor"
 lr_desc = "Learning rate controls how much to change the model in response to the estimated error each time the model "\
           "weights are updated."

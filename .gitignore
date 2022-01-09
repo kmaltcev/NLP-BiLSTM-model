@@ -6,7 +6,6 @@
 /embeddings/
 /plots/
 /venv/
-__pycache__/
 /final_project.egg-info/
 /dist/
 /build/

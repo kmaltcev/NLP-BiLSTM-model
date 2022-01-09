@@ -2,7 +2,6 @@ import json
 import os
 import streamlit as st
 import tensorflow as tf
-
 from scipy.stats import ttest_ind
 from data.DataTypes import TestSet, TrainSet, RawDataset
 from models.Models import ELMo, CNN, BiLSTM, Ensemble
@@ -10,6 +9,8 @@ from utils import strings as R
 from utils.constants import Constants, BOOKS_DIR
 from utils.plots import plot_prediction, plot_train_prediction, build_graph_data_summary, build_graph_data_test
 from utils.utils import convert_embeddings_to_tensor, circular_generator, build_graph_data, count_distance
+
+os.environ['TF_GPU_ALLOCATOR'] = 'cuda_malloc_async'
 
 
 def show_hide_help_button_onclick():
@@ -57,9 +58,9 @@ base_dir = st.sidebar.text_input(R.path_to_data_label, value=f"./{BOOKS_DIR}")
 def distance_check(distance):
     if distance == 0:
         st.error(R.same_books_err(distance))
-    elif 0 < distance < 200:
+    elif 0 < distance < 190:
         st.warning(R.similar_books_err(distance))
-    elif 200 <= distance < 400:
+    elif 190 <= distance < 400:
         st.success(R.good_books_success(distance))
     else:
         st.warning(R.diff_books_warning(distance))
@@ -155,11 +156,7 @@ if base_dir:
                     predictions = plot_prediction(graph_data_summary, R.plot_summary_path(constants.path_to_plot))
                     plot_by_cols(R.summarized_pred_desc, predictions)
                     # Count P-value
-                    s1 = graph_data_summary[graph_data_summary['label'] == impostor1]['count'].values
-                    s2 = graph_data_summary[graph_data_summary['label'] == impostor2]['count'].values
+                    s1, s2 = build_graph_data_test(graph_data, authors_pair, creation_under_test)
                     statistic, pvalue = ttest_ind(s1, s2)
-                    prediction = "Original copy" if pvalue*100 < 5 else "-Suspicion"
                     with next(col):
-                        st.metric("P-value", f"{pvalue*100:.4f}%", prediction)
-                    print("end")
-                    del cols
+                        st.metric("P-value", f"{pvalue * 100:.4f}%", R.metric_result(pvalue * 100))

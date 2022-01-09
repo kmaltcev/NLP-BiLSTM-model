@@ -14,7 +14,10 @@ def build_graph_data_test(dataframe, authors_pair, test_creation):
             "count": A['count'].sum()
         }, index=[0]))
     graph_data.append(dataframe[dataframe['book'] == test_creation])
-    return pd.concat(graph_data)
+    df = pd.concat(graph_data)
+    s1 = df[df['label'] == authors_pair[0]]['count'].values
+    s2 = df[df['label'] == authors_pair[1]]['count'].values
+    return s1, s2
 
 
 def build_graph_data_summary(dataframe, authors_pair, test_creation):

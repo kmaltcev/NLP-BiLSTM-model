@@ -1,10 +1,10 @@
 import os
 import io
-
 import zipfile
-
 from setuptools import setup, find_packages
-
+'''
+Script for smooth installation and getting started with the system requirments.
+'''
 with open('requirements.txt') as f:
     required = f.read().splitlines()
 

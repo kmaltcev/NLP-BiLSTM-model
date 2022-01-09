@@ -4,14 +4,16 @@ from keras.utils.vis_utils import plot_model
 from keras.optimizer_v2.adam import Adam
 from utils.plots import plot_eval
 
-'''
-Abstract model
-Methods:
-    predict(self, train_set)
-'''
+
 class AbsModel:
-    name, learning_rate, input_shape, fc_layer, epochs, batch_size = None, None, None, None, None, None
+    input_shape, fc_layer = None, None
     model, history, X_pred = None, None, None
+
+    def __init__(self, name, learning_rate, epochs, batch_size):
+        self.name = name
+        self.learning_rate = learning_rate
+        self.epochs = epochs
+        self.batch_size = batch_size
 
     def build(self):
         self.model = Model(inputs=self.input_shape, outputs=self.fc_layer, name=self.name)

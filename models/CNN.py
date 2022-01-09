@@ -4,10 +4,8 @@ from keras.layers import Input, Conv1D, GlobalMaxPooling1D, Concatenate, Dense, 
 
 class CNN(AbsModel):
     def __init__(self, shape, parameters):
-        self.name = "CNN"
-        self.epochs = parameters[self.name]["epochs"]
-        self.batch_size = parameters[self.name]["batch_size"]
-        self.learning_rate = parameters[self.name]['lr']
+        super().__init__("CNN", parameters[self.name]['lr'],
+                         parameters[self.name]["epochs"], parameters[self.name]["batch_size"])
         if shape is None:
             raise AttributeError('Input shape not set')
 

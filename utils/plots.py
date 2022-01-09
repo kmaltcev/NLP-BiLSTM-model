@@ -3,8 +3,7 @@ import seaborn as sns
 from matplotlib import pyplot as plt
 from utils.utils import circular_generator
 
-
-def build_graph_data_test(dataframe, authors_pair, test_creation):
+'''
     graph_data = []
     for impostor in authors_pair:
         A = dataframe[dataframe['book'] != test_creation][dataframe['label'] == impostor]
@@ -15,8 +14,12 @@ def build_graph_data_test(dataframe, authors_pair, test_creation):
         }, index=[0]))
     graph_data.append(dataframe[dataframe['book'] == test_creation])
     df = pd.concat(graph_data)
-    s1 = df[df['label'] == authors_pair[0]]['count'].values
-    s2 = df[df['label'] == authors_pair[1]]['count'].values
+    '''
+
+
+def build_graph_data_test(dataframe, test_creation):
+    s1 = dataframe[dataframe['book'] == test_creation]['count'].values
+    s2 = dataframe[dataframe['book'] != test_creation]['count'].values
     return s1, s2
 
 

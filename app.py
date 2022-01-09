@@ -10,8 +10,6 @@ from utils.constants import Constants, BOOKS_DIR
 from utils.plots import plot_prediction, plot_train_prediction, build_graph_data_summary, build_graph_data_test
 from utils.utils import convert_embeddings_to_tensor, circular_generator, build_graph_data, compute_distance
 
-os.environ['TF_GPU_ALLOCATOR'] = 'cuda_malloc_async'
-
 
 # On Button click Event listener
 def show_hide_help_button_onclick():
@@ -22,11 +20,9 @@ def show_hide_help_button_onclick():
 def preprocess(dataset):
     with st.spinner(text=R.preprocess_progress_label):
         dataset.preprocess()
-    dataset.chunking(chunk_size=200)
+    dataset.chunking(chunk_size=40)
     with st.spinner(text=R.embedding_progress_label):
-        #elmo = ELMo()
         dataset.create_embeddings(ELMo)
-    #del elmo
 
 
 # Plotting by columns, args must be the arrow of plots
@@ -62,7 +58,7 @@ if st.session_state['show_help']:
         st.markdown(fp.read(), unsafe_allow_html=True)
 
 # Initiate default configs for tensorflow outputs
-tf.compat.v1.experimental.output_all_intermediates(True)
+# tf.compat.v1.experimental.output_all_intermediates(True)
 
 # Load default model settings from settings.json
 with open('settings.json') as f:
@@ -167,7 +163,7 @@ if base_dir:
                     predictions = plot_prediction(graph_data_summary, R.plot_summary_path(constants.path_to_plot))
                     plot_by_cols(R.summarized_pred_desc, predictions)
                     # Count P-value
-                    s1, s2 = build_graph_data_test(graph_data, impostors_pair, creation_under_test)
+                    s1, s2 = build_graph_data_test(graph_data, creation_under_test)
                     statistic, pvalue = ttest_ind(s1, s2)
                     with next(col):
                         delta, delta_color = R.metric_result(pvalue * 100)

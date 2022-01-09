@@ -4,8 +4,8 @@ from keras.layers import Input, LSTM, Bidirectional, Dense, Dropout
 
 class BiLSTM(AbsModel):
     def __init__(self, shape, parameters):
-        super().__init__("BiLSTM", parameters[self.name]['lr'],
-                         parameters[self.name]["epochs"], parameters[self.name]["batch_size"])
+        super().__init__("BiLSTM", parameters["BiLSTM"]['lr'],
+                         parameters["BiLSTM"]["epochs"], parameters["BiLSTM"]["batch_size"])
         if shape is None:
             raise AttributeError('Input shape not set')
 

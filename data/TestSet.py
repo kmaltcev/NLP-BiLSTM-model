@@ -62,7 +62,7 @@ class TestSet(AbsDataset):
             chunked = chunked.append(temp_df)
         self.data = chunked
 
-    def create_embedding(self, elmo):
+    def create_embeddings(self, elmo):
         self.embeddings = [load_embeddings(data_row, elmo, book=data_row['book']) for index, data_row in
                            tqdm(self.data.iterrows(), total=self.data.shape[0],
                                 desc=f"ELMo embedding process for {self.data['author'].values[0]}'s books")]

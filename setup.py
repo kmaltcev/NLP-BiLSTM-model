@@ -3,7 +3,7 @@ import io
 import zipfile
 from setuptools import setup, find_packages
 '''
-Script for smooth installation and getting started with the system requirments.
+Script for smooth installation and getting started with the system requirements.
 '''
 with open('requirements.txt') as f:
     required = f.read().splitlines()
@@ -21,11 +21,6 @@ setup(
     install_requires=required
 )
 
-import conda.cli
-
-conda.cli.main('conda', 'install', '-y', 'cudatoolkit')
-conda.cli.main('conda', 'install', '-y', 'cudnn')
-
 import nltk
 
 nltk.download('stopwords')
@@ -40,9 +35,10 @@ if not os.path.exists("elmo"):
     os.mkdir("elmo")
     if "model.hdf5" not in os.listdir("./elmo"):
         import requests
-
         print("Downloading ELMo (araneum_lemmas_elmo_2048_2020) 1.5 GB...")
         r = requests.get("http://vectors.nlpl.eu/repository/20/212.zip")
         z = zipfile.ZipFile(io.BytesIO(r.content))
         z.extractall("./elmo/")
         print("ELMo is ready!")
+
+print("Setup is done. You good to go!")

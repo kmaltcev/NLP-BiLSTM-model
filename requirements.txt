@@ -16,6 +16,4 @@ tensorflow
 tqdm>=4.61.1
 streamlit
 stqdm
-conda
 scipy>=1.2.1
-scikeras

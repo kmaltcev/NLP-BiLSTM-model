@@ -4,7 +4,11 @@ from keras.utils.vis_utils import plot_model
 from keras.optimizer_v2.adam import Adam
 from utils.plots import plot_eval
 
-
+'''
+Abstract model
+Methods:
+    predict(self, train_set)
+'''
 class AbsModel:
     name, learning_rate, input_shape, fc_layer, epochs, batch_size = None, None, None, None, None, None
     model, history, X_pred = None, None, None
@@ -34,21 +38,3 @@ class AbsModel:
 
     def plot_model(self):
         return plot_model(self.model, f"./plots/{self.name}.png", show_shapes=True)
-
-'''
-    def validation(self, train_set):
-        score_acc = self.model.evaluate(train_set.X_test, train_set.Y_test, verbose=2, batch_size=50)
-        return score_acc
-
-    def confusion_matrix(self, train_set):
-        df_test = pd.DataFrame({'true': train_set.Y_test[:, 1], 'pred': self.X_pred})
-        c_matrix = confusion_matrix(df_test.true, df_test.pred)
-        f, ax = plt.subplots()
-        sns.heatmap(c_matrix, annot=True, linewidth=0.7, linecolor='cyan', fmt='g', ax=ax, cmap="BuPu")
-        plt.title(f"{self.name} Classification Confusion Matrix")
-        plt.xlabel('Y predict')
-        plt.ylabel('Y test')
-        plt.show()
-        print(classification_report(df_test.true, df_test.pred))
-        return c_matrix
-'''

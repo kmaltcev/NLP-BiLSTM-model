@@ -9,6 +9,7 @@ from data.absDataset import AbsDataset, pre_clean, not_stopword
 from utils.utils import load_embeddings, lemmatize
 
 
+# Dataset for impostors
 class RawDataset(AbsDataset):
     data, embeddings = None, None
 
@@ -60,6 +61,7 @@ class RawDataset(AbsDataset):
         self.data = chunked
 
     def create_embedding(self, elmo):
+        # Calling ELMo for each dataset in order to receive embeddings
         self.embeddings = [load_embeddings(data_row, elmo) for index, data_row in
                            tqdm(self.data.iterrows(), total=self.data.shape[0],
                                 desc=f"ELMo embedding process for {self.data['author'].values[0]}")]

@@ -13,10 +13,12 @@ from utils.utils import convert_embeddings_to_tensor, circular_generator, build_
 os.environ['TF_GPU_ALLOCATOR'] = 'cuda_malloc_async'
 
 
+# On Button click Event listener
 def show_hide_help_button_onclick():
     st.session_state['show_help'] = not st.session_state['show_help']
 
 
+# Preprocess dataset flow
 def preprocess(dataset):
     with st.spinner(text=R.preprocess_progress_label):
         dataset.preprocess()
@@ -25,6 +27,7 @@ def preprocess(dataset):
         dataset.create_embedding(ELMo)
 
 
+# Plotting by columns, args must be the arrow of plots
 def plot_by_cols(desc, *args):
     for arg in args:
         with next(col):
@@ -33,23 +36,22 @@ def plot_by_cols(desc, *args):
                 st.caption(desc)
 
 
-def distances_check(dist):
+# Print distances as metrics, dist is an object include:
+# a == name of the first label
+# b == name of the second label
+# distance is any numeric distance
+def show_distances_metrics(dist):
     for k in range(len(dist)):
-        prev = dist[k - 1]
         curr = dist[k]
-        if curr['distance'] == 0:
-            st.metric(label=f"Distance between {curr['a']} and {curr['b']}",
-                      value=f"{curr['distance']:.2f}")
-        else:
-            st.metric(label=f"Distance between {curr['a']} and {curr['b']}",
-                      value=f"{curr['distance']:.2f}",
-                      delta=f"{curr['distance'] - prev['distance']}")
+        st.metric(label=f"Distance between {curr['a']} and {curr['b']}",
+                  value=f"{curr['distance']:.2f}")
 
 
 # Set streamlit configuration
 st.set_page_config(page_title=R.page_title, initial_sidebar_state="expanded", layout="wide")
 st.markdown(R.main_page_title)
 
+# Set button for help
 show_hide_help_button = st.sidebar.button("Show/Hide instructions", on_click=show_hide_help_button_onclick)
 if 'show_help' not in st.session_state:
     st.session_state['show_help'] = False
@@ -65,19 +67,22 @@ with open('settings.json') as f:
     settings = json.load(f)
 
 # Base data directory path
-base_dir = st.sidebar.text_input(R.path_to_data_label, value=f"./{BOOKS_DIR}")
+base_dir = st.sidebar.text_input(R.path_to_data_label, value=f"./{BOOKS_DIR}", help="Root directory of the dataset")
 
+# When base_dir is chosen, we fill the sidebar
 if base_dir:
+    # Get list of data folders
     all_data = os.listdir(base_dir)
+    # Impostors choose
     first_impostor = st.sidebar.multiselect(R.first_impostor_label, all_data)
     second_impostor = st.sidebar.multiselect(R.second_impostor_label, all_data)
+    # Test author and test creation choose
     author_under_test = st.sidebar.selectbox(R.author_under_test, all_data)
     creation_under_test = st.sidebar.selectbox(R.select_box_label, os.listdir(f"{base_dir}/{author_under_test}"))
-    btn_cols = st.sidebar.columns([1, 3])
+    # Set button
     start_training = st.sidebar.button(R.button_label)
-    # Hyper-Parameters controls
+    # Fill the sidebar with Hyper-Parameters controls
     sb_cols = st.sidebar.columns([1, 1])
-    # Initialize variables
     parameters = dict()
     for i, (category, category_param_list) in enumerate(settings['params'].items()):
         with sb_cols[i]:
@@ -90,7 +95,7 @@ if base_dir:
                                                               config['max_value'], config['value'],
                                                               config['step'], key=(i + j + 3),
                                                               format=config['format'], help=config['help'])
-    # begin training
+    # Begin training
     if start_training:
         if len(first_impostor) == 0 or len(second_impostor) == 0:
             st.error(R.empty_impostors_err)
@@ -106,31 +111,35 @@ if base_dir:
                 preprocess(test_set)
                 # Loops over impostors pairs
                 for idx, (impostor1, impostor2) in enumerate(zip(first_impostor, second_impostor)):
-
-                    # Initialize constants
-                    constants = Constants(author_under_test, creation_under_test, impostor1, impostor2)
                     # Check if pairs is the same
                     if impostor1 == impostor2:
                         st.warning(R.same_impostors_err(impostor1))
-
+                    # Initialize constants object
+                    constants = Constants(author_under_test, creation_under_test, impostor1, impostor2)
+                    # Print title
                     st.markdown(R.experiment_title(idx, impostor1, impostor2))
+                    # Make layout with columns
+                    cols = st.columns([1, 1, 1, 1])
+                    col = circular_generator(cols)
+                    # Build the raw train dataset
                     impostors_pair = [impostor1, impostor2]
                     raw_train_set = RawDataset(impostors_pair)
                     preprocess(raw_train_set)
-
-                    cols = st.columns([1, 1, 1, 1])
-                    col = circular_generator(cols)
+                    # Build ready to train dataset
                     train_set = TrainSet(raw_train_set.data)
+                    # Build our networks
                     cnn = CNN(train_set.X_shape(), parameters)
                     bilstm = BiLSTM(train_set.X_shape(), parameters)
                     cnn_bilstm = Ensemble(train_set)
-
+                    # Train CNN
                     with st.spinner(text=R.training_title(cnn.name)):
                         loss_fig, acc_fig = cnn_bilstm.add(cnn, constants.path_to_plot)
                         plot_by_cols("", loss_fig, acc_fig)
+                    # Train BiLSTM
                     with st.spinner(text=R.training_title(bilstm.name)):
                         loss_fig, acc_fig = cnn_bilstm.add(bilstm, constants.path_to_plot)
                         plot_by_cols("", loss_fig, acc_fig)
+                    # Train Ensemble
                     with st.spinner(text=R.training_title(cnn_bilstm.name)):
                         cnn_bilstm.build()
                         cnn_bilstm.fit()
@@ -169,4 +178,4 @@ if base_dir:
                             distances.append({"a": impostor1,
                                               "b": impostor2,
                                               "distance": compute_distance(texts)})
-                        distances_check(distances)
+                        show_distances_metrics(distances)

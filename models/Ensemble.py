@@ -42,4 +42,5 @@ class Ensemble:
         if X is None:
             print("Using Testing Set for Classes Prediction")
             X = self.train_set.X_train
-        return np.array(self.model.predict(X), dtype='uint8')
+        return np.array(np.concatenate([self.model.predict(X[i: i + 100]) for i in range(0, len(X), 100)]),
+                        dtype='uint8')

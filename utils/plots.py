@@ -3,26 +3,29 @@ import seaborn as sns
 from matplotlib import pyplot as plt
 from utils.utils import circular_generator
 
-'''
-    graph_data = []
-    for impostor in authors_pair:
-        A = dataframe[dataframe['book'] != test_creation][dataframe['label'] == impostor]
-        graph_data.append(pd.DataFrame({
-            "book": "Summary except test creation",
-            "label": A['label'].values[0],
-            "count": A['count'].sum()
-        }, index=[0]))
-    graph_data.append(dataframe[dataframe['book'] == test_creation])
-    df = pd.concat(graph_data)
-    '''
+
+# Compute ratios and expected value
+def build_graph_data_z_test(dataframe, impostors_pair, creation_under_test):
+    value = dataframe[dataframe['book'] == creation_under_test]['count'].values
+    value = value[0] / value[1] if value[1] != 0 else 0
+
+    dataframe = dataframe[dataframe['book'] != creation_under_test]
+    arr = [dataframe[dataframe['label'] == impostors_pair[0]]['count'].values,
+           dataframe[dataframe['label'] == impostors_pair[1]]['count'].values]
+
+    ratios = []
+    for v1, v2 in zip(arr[0], arr[1]):
+        if v2 == 0:
+            ratios.append(v1)
+        elif v1 == 0:
+            ratios.append(v2)
+        else:
+            ratios.append(v1 / v2)
+
+    return ratios, value
 
 
-def build_graph_data_test(dataframe, test_creation):
-    s1 = dataframe[dataframe['book'] == test_creation]['count'].values
-    s2 = dataframe[dataframe['book'] != test_creation]['count'].values
-    return s1, s2
-
-
+# Compute sum's of predictions except Book under test, and scale book under test
 def build_graph_data_summary(dataframe, authors_pair, test_creation):
     graph_data = []
     for impostor in authors_pair:
@@ -68,29 +71,6 @@ def plot_eval(history, epochs, title, path_to_plot):
     plt.legend()
     plt.savefig(f'./{path_to_plot}/{title}_train_vs_val_acc.png')
     return fig_1, fig_2
-
-
-def plot_scores(score_a, score_b, path):
-    data = {'abbrev': ['CNN', 'BiLSTM'],
-            'score': [score_a[0], score_b[0]],
-            'accuracy': [score_a[1], score_b[1]]}
-    sns.set_theme(style="whitegrid")
-    f, ax = plt.subplots()
-    sns.set_color_codes("pastel")
-    sns.barplot(x="accuracy", y="abbrev", data=data,
-                label="Accuracy", color="b")
-    sns.set_color_codes("muted")
-    sns.barplot(x="score", y="abbrev", data=data,
-                label="Score", color="b")
-    ax.legend(bbox_to_anchor=(1, 1), ncol=1, loc='lower right', frameon=True)
-    ax.set(ylabel="NN Type",
-           xlabel="Score/Accuracy Value")
-    for i in range(len(data['abbrev'])):
-        plt.annotate(f"{data['score'][i]:.2f}", xy=(data['score'][i], i))
-        plt.annotate(f"{data['accuracy'][i]:.2f}", xy=(data['accuracy'][i], i))
-    plt.title(f"Score and Accuracy")
-    plt.show()
-    plt.savefig(f'{path}/Score_acc_plot.png')
 
 
 def plot_prediction(graph_data, path):

@@ -2,12 +2,12 @@ import json
 import os
 import streamlit as st
 import tensorflow as tf
-from scipy.stats import ttest_ind
+from statsmodels.stats.weightstats import ztest
 from data.DataTypes import TestSet, TrainSet, RawDataset
 from models.Models import ELMo, CNN, BiLSTM, Ensemble
 from utils import strings as R
 from utils.constants import Constants, BOOKS_DIR
-from utils.plots import plot_prediction, plot_train_prediction, build_graph_data_summary, build_graph_data_test
+from utils.plots import plot_prediction, plot_train_prediction, build_graph_data_summary, build_graph_data_z_test
 from utils.utils import convert_embeddings_to_tensor, circular_generator, build_graph_data, compute_distance
 
 
@@ -58,7 +58,7 @@ if st.session_state['show_help']:
         st.markdown(fp.read(), unsafe_allow_html=True)
 
 # Initiate default configs for tensorflow outputs
-# tf.compat.v1.experimental.output_all_intermediates(True)
+tf.compat.v1.experimental.output_all_intermediates(True)
 
 # Load default model settings from settings.json
 with open('settings.json') as f:
@@ -163,8 +163,8 @@ if base_dir:
                     predictions = plot_prediction(graph_data_summary, R.plot_summary_path(constants.path_to_plot))
                     plot_by_cols(R.summarized_pred_desc, predictions)
                     # Count P-value
-                    s1, s2 = build_graph_data_test(graph_data, creation_under_test)
-                    statistic, pvalue = ttest_ind(s1, s2)
+                    s1, s2 = build_graph_data_z_test(graph_data, impostors_pair, creation_under_test)
+                    ztest_Score, pvalue = ztest(s1, value=s2)
                     with next(col):
                         delta, delta_color = R.metric_result(pvalue * 100)
                         st.metric(label="P-value",

@@ -13,7 +13,7 @@ prediction_by_creation_desc = "Predictions distribution by every creation"
 summarized_pred_desc = "Non-creation under test predictions are summed. Creation under test is scaled"
 validation_barplot_desc = "Validation plot."
 length_err = "Impostors are not the same length. Please provide the same number of authors for each impostor"
-lr_desc = "Learning rate controls how much to change the model in response to the estimated error each time the model "\
+lr_desc = "Learning rate controls how much to change the model in response to the estimated error each time the model " \
           "weights are updated."
 empty_impostors_err = "Impostors are empty"
 

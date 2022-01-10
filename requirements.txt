@@ -17,3 +17,4 @@ tqdm>=4.61.1
 streamlit
 stqdm
 scipy>=1.2.1
+statsmodels
